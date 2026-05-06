@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@source "../components";
+@source "../app";
+@source "../lib";
+
+@theme {
+  --color-blue: #019cff;
+  --color-blue-dark: #0088e0;
+  --color-orange: #fe5401;
+
+  --color-dark: #050c14;
+  --color-dark-2: #0b1622;
+  --color-dark-3: #0f1e2e;
+  --color-surface: #131f2d;
+  --color-text: #e8f4ff;
+  --color-muted: #6e8fa8;
+  --color-green: #2dce89;
+
+  --color-ink: #e8f4ff;
+  --color-ink-dim: #6e8fa8;
+  --color-ink-muted: rgba(110,143,168,0.55);
+
+  --color-bg: #050c14;
+  --color-bg-2: #0b1622;
+
+  --color-border: rgba(1,156,255,0.08);
+  --color-border-blue: rgba(1,156,255,0.15);
+  --color-border-subtle: rgba(1,156,255,0.1);
+
+  --font-display: var(--font-syne), sans-serif;
+  --font-body: var(--font-dm-sans), sans-serif;
+  --font-mono: var(--font-space-mono), monospace;
+
+  --font-syne: var(--font-syne), sans-serif;
+  --font-baskerville: var(--font-dm-sans), sans-serif;
+
+  --animate-marquee: marquee 25s linear infinite;
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+/* ══════════════════════════════════════════
+   BASE RESET — Must be inside @layer base
+   so Tailwind utilities can override it
+══════════════════════════════════════════ */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-dark);
+    color: var(--color-text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: rgba(1,156,255,.22);
+    color: #fff;
+  }
+
+  img { max-width: 100%; display: block; }
+  a   { text-decoration: none; color: inherit; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar       { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--color-dark-2); }
+  ::-webkit-scrollbar-thumb { background: rgba(1,156,255,.35); border-radius: 3px; }
+}
+
+/* ══════════════════════════════════════════
+   COMPONENTS — inside @layer components
+   so utilities can still override them
+══════════════════════════════════════════ */
+@layer components {
+  /* Scroll Progress Bar */
+  #scroll-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-blue), var(--color-orange));
+    z-index: 300;
+    transition: width .08s linear;
+  }
+
+  /* Clip Path Button (kept from original design) */
+  .btn-clip {
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    background: linear-gradient(90deg, var(--color-blue), var(--color-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Skill Bar */
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-blue), rgba(254,84,1,.8));
+    border-radius: 2px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(.25,.46,.45,.94);
+  }
+
+  /* Reveal Animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .65s ease, transform .65s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ══════════════════════════════════════════
+   KEYFRAMES — outside layers (global)
+══════════════════════════════════════════ */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .4; transform: scale(.65); }
+}
+
+@keyframes rise {
+  0%   { transform: translateY(0); opacity: .8; }
+  100% { transform: translateY(-80px); opacity: 0; }
+}
+
+@keyframes orb1 { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+@keyframes orb2 { from { transform: rotate(0deg) } to { transform: rotate(-360deg) } }
+
+/* Flask bubbles */
+.bubble    { animation: rise 3s ease-in infinite; }
+.bubble-b2 { animation-duration: 4s; animation-delay: 1s; }
+.bubble-b3 { animation-duration: 2.5s; animation-delay: .5s; }
+
+/* Atom orbit animations */
+.oa1 { animation: orb1 8s linear infinite;  transform-origin: 180px 180px; }
+.oa2 { animation: orb2 11s linear infinite; transform-origin: 180px 180px; }
+.oa3 { animation: orb1 15s linear infinite; transform-origin: 180px 180px; }
