@@ -1,17 +1,17 @@
-import type { Project, SiteMeta } from '@/lib/api';
+import type { Project } from '@/lib/api';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
 
-export function ProjectsSection({ projects, meta }: { projects: Project[]; meta: SiteMeta }) {
+export function ProjectsSection({ projects }: { projects: Project[] }) {
   return (
     <section id="projects" className="px-6 lg:px-16 py-24 bg-dark">
       <div className="max-w-[1200px] mx-auto">
         <div className="flex items-end justify-between mb-12">
           <RevealWrapper>
             <SectionHeader 
-              label={meta.projects_label} 
-              title={meta.projects_title} 
-              titleAccent={meta.projects_accent} 
+              label="Projects" 
+              title="Case studies &" 
+              titleAccent="formulas" 
             />
           </RevealWrapper>
           <RevealWrapper delay={80}>
@@ -28,7 +28,7 @@ export function ProjectsSection({ projects, meta }: { projects: Project[]; meta:
 
         <RevealWrapper delay={100}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {projects.map((project, i) => (
+            {projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>

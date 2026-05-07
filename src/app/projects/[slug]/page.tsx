@@ -1,4 +1,4 @@
-import { getProjectBySlug, getProjects, getSiteSettings } from '@/lib/api';
+import { getProjectBySlug, getProjects } from '@/lib/api';
 import { Nav } from '@/components/layout/Nav';
 import { Footer } from '@/components/layout/Footer';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
@@ -26,16 +26,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug } = await params;
-  const [project, meta] = await Promise.all([
-    getProjectBySlug(slug),
-    getSiteSettings(),
-  ]);
+  const project = await getProjectBySlug(slug);
 
   if (!project) notFound();
 
   return (
     <main className="bg-dark min-h-screen">
-      <Nav meta={meta} />
+      <Nav />
       
       {/* Header Section */}
       <section className="px-6 lg:px-16 pt-40 pb-20 border-b border-[rgba(1,156,255,0.08)] relative overflow-hidden bg-dark-2">
@@ -110,7 +107,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 </a>
                 <a
                   href="/projects"
-                  className="inline-flex items-center gap-2 border border-border-blue text-muted font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:border-blue hover:text-text"
+                  className="inline-flex items-center gap-2 border border-[rgba(1,156,255,0.2)] text-muted font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:border-blue hover:text-text"
                 >
                   ← All Projects
                 </a>
@@ -122,14 +119,14 @@ export default async function ProjectDetailPage({ params }: Props) {
           <div className="order-1 lg:order-2">
             {project.tech_tags && project.tech_tags.length > 0 && (
               <RevealWrapper delay={150}>
-                <div className="bg-dark-2 border border-border p-8 mb-8">
+                <div className="bg-dark-2 border border-[rgba(1,156,255,0.08)] p-8 mb-8">
                   <h3 className="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-orange mb-6 flex items-center gap-3">
                     <span className="w-4 h-px bg-orange" />
                     Stack & Tools
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {project.tech_tags.map(tag => (
-                      <span key={tag} className="font-mono text-[0.6rem] tracking-[0.1em] uppercase text-text bg-[rgba(255,255,255,0.03)] border border-border px-3 py-1.5">
+                      <span key={tag} className="font-mono text-[0.6rem] tracking-[0.1em] uppercase text-text bg-[rgba(255,255,255,0.03)] border border-[rgba(1,156,255,0.1)] px-3 py-1.5">
                         {tag}
                       </span>
                     ))}
@@ -139,7 +136,7 @@ export default async function ProjectDetailPage({ params }: Props) {
             )}
             
             <RevealWrapper delay={200}>
-              <div className="bg-dark-2 border border-border p-8">
+              <div className="bg-dark-2 border border-[rgba(1,156,255,0.08)] p-8">
                 <h3 className="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-orange mb-6 flex items-center gap-3">
                   <span className="w-4 h-px bg-orange" />
                   Key Results
@@ -161,7 +158,7 @@ export default async function ProjectDetailPage({ params }: Props) {
         </div>
       </section>
 
-      <Footer meta={meta} />
+      <Footer />
     </main>
   );
 }

@@ -10,25 +10,25 @@ import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
 import { ContactSection } from '@/components/sections/ContactSection';
 import { Footer } from '@/components/layout/Footer';
 
-// ISR: revalidate every hour (WordPress plugin auto-triggers on publish too)
+// ISR: revalidate every hour
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  const { meta, projects, services, experience, skills, testimonials, clients } =
+  const { projects, services, experience, skills, testimonials, clients } =
     await getPortfolioData();
 
   return (
     <main>
-      <Nav meta={meta} />
-      <HeroSection meta={meta} />
-      <AboutSection meta={meta} />
-      <ServicesSection services={services} meta={meta} />
-      <ExperienceSection experience={experience} skills={skills} meta={meta} />
-      <ProjectsSection projects={projects} meta={meta} />
+      <Nav />
+      <HeroSection />
+      <AboutSection />
+      <ServicesSection services={services} />
+      <ExperienceSection experience={experience} skills={skills} />
+      <ProjectsSection projects={projects} />
       <ClientsSection clients={clients} />
-      <TestimonialsSection testimonials={testimonials} meta={meta} />
-      <ContactSection meta={meta} />
-      <Footer meta={meta} />
+      <TestimonialsSection testimonials={testimonials} />
+      <ContactSection />
+      <Footer />
     </main>
   );
 }

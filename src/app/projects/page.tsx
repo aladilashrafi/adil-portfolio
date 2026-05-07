@@ -1,4 +1,4 @@
-import { getProjects, getSiteSettings } from '@/lib/api';
+import { getProjects } from '@/lib/api';
 import { Nav } from '@/components/layout/Nav';
 import { Footer } from '@/components/layout/Footer';
 import { ProjectsSection } from '@/components/sections/ProjectsSection';
@@ -13,11 +13,11 @@ export const metadata: Metadata = {
 };
 
 export default async function ProjectsPage() {
-  const [projects, meta] = await Promise.all([getProjects(), getSiteSettings()]);
+  const projects = await getProjects();
 
   return (
     <main className="bg-dark min-h-screen">
-      <Nav meta={meta} />
+      <Nav />
       
       {/* Page Header */}
       <section className="px-6 lg:px-16 pt-40 pb-10 bg-dark-2 border-b border-[rgba(1,156,255,0.08)]">
@@ -50,7 +50,7 @@ export default async function ProjectsPage() {
         <ProjectsSection projects={projects} />
       </div>
 
-      <Footer meta={meta} />
+      <Footer />
     </main>
   );
 }

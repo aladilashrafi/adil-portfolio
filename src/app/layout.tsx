@@ -26,11 +26,11 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Al Adil Ashrafi — The Marketing Alchemist',
+  title: 'Al Adil Ashrafi - The Marketing Alchemist',
   description:
-    'Digital marketing specialist bridging chemistry and marketing. Co-founder of Markimist. Creator of Bangla Track.',
+    'Digital marketing specialist bridging marketing and technology. Co-founder of Markimist. Creator of Bangla Track.',
   openGraph: {
-    title: 'Al Adil Ashrafi — The Marketing Alchemist',
+    title: 'Al Adil Ashrafi - The Marketing Alchemist',
     description:
       'Digital marketer, entrepreneur, and builder turning data into growth and strategy into revenue.',
     url: 'https://adilashrafi.com',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Al Adil Ashrafi — The Marketing Alchemist',
+    title: 'Al Adil Ashrafi - The Marketing Alchemist',
   },
   robots: {
     index: true,

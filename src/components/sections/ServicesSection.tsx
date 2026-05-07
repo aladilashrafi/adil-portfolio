@@ -1,16 +1,16 @@
-import type { Service, SiteMeta } from '@/lib/api';
+import type { Service } from '@/lib/api';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
 
-export function ServicesSection({ services, meta }: { services: Service[]; meta: SiteMeta }) {
+export function ServicesSection({ services }: { services: Service[] }) {
   return (
     <section id="services" className="px-6 lg:px-16 py-24 bg-dark">
       <div className="max-w-[1200px] mx-auto">
         <RevealWrapper>
           <SectionHeader 
-            label={meta.services_label} 
-            title={meta.services_title} 
-            titleAccent={meta.services_accent} 
+            label="Services" 
+            title="The compounds I" 
+            titleAccent="create" 
           />
         </RevealWrapper>
 

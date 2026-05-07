@@ -2,122 +2,143 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import type { SiteMeta } from '@/lib/api';
 
 const NAV_LINKS = [
   { href: '#about',      label: 'About'      },
-  { href: '#services',   label: 'Services'    },
-  { href: '#experience', label: 'Experience'  },
-  { href: '#projects',   label: 'Projects'    },
+  { href: '#services',   label: 'Services'   },
+  { href: '#experience', label: 'Experience' },
+  { href: '#projects',   label: 'Projects'   },
   { href: '#contact',    label: 'Contact'     },
 ];
 
-export function Nav({ meta }: { meta: SiteMeta }) {
+export function Nav() {
+  const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 24);
-    window.addEventListener('scroll', fn, { passive: true });
-    return () => window.removeEventListener('scroll', fn);
+    setMounted(true);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <>
       <nav
-        aria-label="Main navigation"
-        className={`fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 lg:px-16 h-16 transition-all duration-300 border-b ${
-          scrolled
-            ? 'bg-[rgba(5,12,20,0.93)] backdrop-blur-[14px] border-[rgba(1,156,255,0.1)]'
-            : 'bg-transparent border-transparent'
+        className={`fixed top-0 left-0 right-0 z-[70] h-20 transition-all duration-300 flex items-center justify-between px-6 lg:px-16 ${
+          scrolled ? 'bg-[rgba(11,22,34,0.85)] backdrop-blur-md border-b border-[rgba(1,156,255,0.08)]' : 'bg-transparent'
         }`}
       >
-        <Link
-          href="/"
-          className="font-display font-extrabold text-base tracking-tight text-text no-underline transition-colors duration-200 hover:text-blue"
-          style={{ letterSpacing: '-0.02em' }}
-        >
-          Al Adil <span className="text-blue">Ashrafi</span>
+        <Link href="#hero" className="font-display font-extrabold text-[1.15rem] text-text tracking-tight group">
+          Al Adil <span className="text-blue group-hover:text-text transition-colors duration-300">Ashrafi</span>
         </Link>
 
-        <ul className="hidden md:flex gap-10 list-none m-0 p-0">
-          {NAV_LINKS.map((l) => (
-            <li key={l.href}>
+        {/* Desktop Links */}
+        <ul className="hidden md:flex items-center gap-10">
+          {NAV_LINKS.map((link) => (
+            <li key={link.href}>
               <a
-                href={l.href}
-                className="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-muted no-underline transition-colors duration-200 hover:text-text"
+                href={link.href}
+                className="font-mono text-[0.62rem] tracking-[0.16em] uppercase text-muted hover:text-blue transition-colors duration-200"
               >
-                {l.label}
+                {link.label}
               </a>
             </li>
           ))}
         </ul>
 
-        <a
-          href="#contact"
-          className="hidden md:inline-block font-mono text-[0.65rem] tracking-[0.12em] uppercase text-orange border border-orange px-5 py-2 transition-all duration-200 hover:bg-orange hover:text-white"
-          style={{ borderRadius: '2px' }}
-        >
-          Let&apos;s Work →
-        </a>
+        {/* Desktop Socials & CTA */}
+        {mounted && (
+          <div className="hidden md:flex items-center gap-6">
+            <div className="flex items-center gap-4 border-r border-[rgba(1,156,255,0.15)] pr-6 mr-1">
+              <a 
+                href="https://github.com/aladilashrafi" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="text-muted hover:text-blue transition-colors"
+                title="GitHub"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              </a>
+              <a 
+                href="https://linkedin.com/in/aladilashrafisaikat" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="text-muted hover:text-blue transition-colors"
+                title="LinkedIn"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </a>
+            </div>
+            
+            <a
+              href="#contact"
+              className="btn-clip inline-flex items-center gap-2 bg-blue text-white font-mono text-[0.65rem] tracking-[0.1em] uppercase px-7 py-3 transition-all duration-200 hover:bg-[#0088e0] hover:-translate-y-0.5"
+              style={{ borderRadius: '2px' }}
+            >
+              Let's Work →
+            </a>
+          </div>
+        )}
 
-        {/* Hamburger */}
+        {!mounted && (
+          <div className="hidden md:block">
+            <a
+              href="#contact"
+              className="btn-clip inline-flex items-center gap-2 bg-blue text-white font-mono text-[0.65rem] tracking-[0.1em] uppercase px-7 py-3 transition-all duration-200 hover:bg-[#0088e0]"
+              style={{ borderRadius: '2px' }}
+            >
+              Let's Work →
+            </a>
+          </div>
+        )}
+
+        {/* Mobile Toggle */}
         <button
-          className="md:hidden flex flex-col gap-[5px] p-1 bg-transparent border-none cursor-pointer"
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-label="Toggle menu"
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden w-8 h-8 flex flex-col items-end justify-center gap-1.5 focus:outline-none"
         >
-          <span
-            className={`block w-5 h-[1.5px] bg-muted rounded-sm transition-all duration-300 ${
-              menuOpen ? 'translate-y-[6.5px] rotate-45' : ''
-            }`}
-          />
-          <span
-            className={`block w-5 h-[1.5px] bg-muted rounded-sm transition-all duration-300 ${
-              menuOpen ? 'opacity-0' : ''
-            }`}
-          />
-          <span
-            className={`block w-5 h-[1.5px] bg-muted rounded-sm transition-all duration-300 ${
-              menuOpen ? '-translate-y-[6.5px] -rotate-45' : ''
-            }`}
-          />
+          <span className={`h-0.5 bg-blue transition-all duration-300 ${menuOpen ? 'w-8 rotate-45 translate-y-2' : 'w-7'}`} />
+          <span className={`h-0.5 bg-blue transition-all duration-300 ${menuOpen ? 'opacity-0' : 'w-5'}`} />
+          <span className={`h-0.5 bg-blue transition-all duration-300 ${menuOpen ? 'w-8 -rotate-45 -translate-y-2' : 'w-8'}`} />
         </button>
       </nav>
 
-      {/* Mobile Menu Overlay */}
-      <div 
-        className={`fixed inset-0 z-[190] bg-dark/80 backdrop-blur-xl transition-all duration-500 lg:hidden ${
-          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={() => setMenuOpen(false)}
-      />
-
-      <div 
-        className={`fixed top-0 right-0 bottom-0 z-[210] w-[280px] bg-dark-2 border-l border-[rgba(1,156,255,0.1)] transition-transform duration-500 lg:hidden ${
-          menuOpen ? 'translate-x-0' : 'translate-x-full'
+      {/* Mobile Menu */}
+      <div
+        className={`fixed inset-0 z-[60] bg-[#0b1622] flex flex-col items-center pt-32 pb-20 justify-start gap-8 transition-transform duration-500 overflow-y-auto md:hidden ${
+          menuOpen ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
-        <div className="flex flex-col gap-8 p-12 mt-16">
-          {NAV_LINKS.map((l, i) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setMenuOpen(false)}
-              className="font-display font-bold text-2xl text-text hover:text-blue transition-colors duration-300"
-              style={{ transitionDelay: `${i * 50}ms` }}
-            >
-              {l.label}
-            </a>
-          ))}
+        {NAV_LINKS.map((link) => (
           <a
-            href="#contact"
+            key={link.href}
+            href={link.href}
             onClick={() => setMenuOpen(false)}
-            className="inline-block mt-4 font-mono text-[0.65rem] tracking-[0.15em] uppercase text-orange border border-orange px-6 py-3 text-center"
+            className="font-display font-bold text-2xl text-text hover:text-blue transition-colors"
           >
-            Let&apos;s Work →
+            {link.label}
+          </a>
+        ))}
+        
+        <div className="flex gap-6 mt-4">
+          <a href="https://github.com/aladilashrafi" target="_blank" rel="noreferrer" className="text-muted hover:text-blue transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          </a>
+          <a href="https://linkedin.com/in/aladilashrafisaikat" target="_blank" rel="noreferrer" className="text-muted hover:text-blue transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
           </a>
         </div>
+
+        <a
+          href="#contact"
+          onClick={() => setMenuOpen(false)}
+          className="font-mono text-[0.7rem] tracking-[0.2em] uppercase text-blue border border-blue px-10 py-4 mt-4"
+          style={{ borderRadius: '2px' }}
+        >
+          Let's Work →
+        </a>
       </div>
     </>
   );

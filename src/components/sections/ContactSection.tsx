@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import type { SiteMeta } from '@/lib/api';
 import { submitContact } from '@/lib/api';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
@@ -16,7 +15,7 @@ interface FormState {
   budget: string;
 }
 
-export function ContactSection({ meta }: { meta: SiteMeta }) {
+export function ContactSection() {
   const [form, setForm] = useState<FormState>({
     name: '',
     email: '',
@@ -61,9 +60,9 @@ export function ContactSection({ meta }: { meta: SiteMeta }) {
         <RevealWrapper>
           <div className="text-center">
             <SectionHeader
-              label={meta.contact_label}
-              title={meta.contact_title}
-              titleAccent={meta.contact_accent}
+              label="Contact"
+              title="Start a"
+              titleAccent="project"
               centered
             />
           </div>
@@ -73,16 +72,6 @@ export function ContactSection({ meta }: { meta: SiteMeta }) {
           <p className="text-muted text-center mt-4 mb-4">
             Open to freelance projects, consulting, and full-time opportunities.
           </p>
-        </RevealWrapper>
-
-        <RevealWrapper delay={120}>
-          <a
-            href={`mailto:${meta.email}`}
-            className="block text-center font-display font-extrabold text-blue border-b-2 border-[rgba(1,156,255,0.25)] pb-1 mx-auto transition-colors duration-200 hover:border-blue w-fit my-7"
-            style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2.4rem)', letterSpacing: '-0.025em' }}
-          >
-            {meta.email}
-          </a>
         </RevealWrapper>
 
         <RevealWrapper delay={160}>
@@ -97,7 +86,7 @@ export function ContactSection({ meta }: { meta: SiteMeta }) {
               <p className="font-mono text-[0.58rem] tracking-[0.16em] uppercase text-muted mb-1">
                 Location
               </p>
-              <p className="text-[0.92rem] text-text font-medium">{meta.location?.split(',')[0] || 'Mohammadpur, Dhaka'}</p>
+              <p className="text-[0.92rem] text-text font-medium">Mohammadpur, Dhaka</p>
             </div>
             <div className="text-center">
               <p className="font-mono text-[0.58rem] tracking-[0.16em] uppercase text-muted mb-1">
@@ -111,7 +100,7 @@ export function ContactSection({ meta }: { meta: SiteMeta }) {
         <RevealWrapper delay={200}>
           <div className="flex gap-3 justify-center mt-8 flex-wrap">
             <a
-              href={`mailto:${meta.email}`}
+              href="mailto:hello@adilashrafi.com"
               className="btn-clip inline-flex items-center gap-2 bg-blue text-white font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:bg-[#0088e0] hover:-translate-y-px"
               style={{ borderRadius: '2px' }}
             >
@@ -241,12 +230,12 @@ export function ContactSection({ meta }: { meta: SiteMeta }) {
         <RevealWrapper delay={300}>
           <div className="flex justify-center gap-6 mt-10 pt-8 border-t border-[rgba(1,156,255,0.08)]">
             <a
-              href="https://adilashrafi.com"
+              href="https://linkedin.com/in/aladilashrafisaikat"
               target="_blank"
               rel="noreferrer"
               className="font-mono text-[0.62rem] tracking-[0.12em] uppercase text-muted border-b border-transparent pb-0.5 transition-all duration-200 hover:text-blue hover:border-blue"
             >
-              Website
+              LinkedIn
             </a>
             <a
               href="https://markimist.com"
