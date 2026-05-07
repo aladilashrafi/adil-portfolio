@@ -11,24 +11,16 @@ export function AtomSvg() {
       <g className="oa3"><circle cx="148" cy="148" r="5" fill="rgba(1,156,255,0.65)" stroke="#019cff" strokeWidth="1" /></g>
 
       <defs>
-        <clipPath id="nucleusClip">
-          <path d="M 40,180 
-                   A 140,140 0 0 1 320,180 
-                   L 320,270 
-                   A 50,50 0 0 1 270,320 
-                   L 90,320 
-                   A 50,50 0 0 1 40,270 
-                   Z" />
+        <clipPath id="circleClip">
+          <circle cx="180" cy="180" r="140" />
         </clipPath>
       </defs>
-
-      {/* user image nucleus */}
       <image
         x="40" y="40"
         width="280" height="280"
         href="/al-adil-ashrafi-saikat.png"
-        clipPath="url(#nucleusClip)"
-        preserveAspectRatio="xMidYMid slice"
+        clipPath="url(#circleClip)"
+        preserveAspectRatio="xMidYMid meet"
         style={{ filter: 'grayscale(100%) contrast(1.1) brightness(1.05)' }}
       />
       <circle cx="180" cy="180" r="150" fill="none" stroke="rgba(1,156,255,0.4)" strokeWidth="1.5" />
