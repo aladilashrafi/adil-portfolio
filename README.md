@@ -414,7 +414,7 @@ Please include a brief description of your changes and, where applicable, screen
 
 - Website: [adilashrafi.com](https://adilashrafi.com)
 - Email: [hello@adilashrafi.com](mailto:hello@adilashrafi.com)
-- LinkedIn: [linkedin.com/in/aladilashrafisaikat](https://linkedin.com/in/aladilashrafisaikat)
+- LinkedIn: [linkedin.com/in/al-adil-ashrafi](https://linkedin.com/in/al-adil-ashrafi/)
 - GitHub: [@aladilashrafi](https://github.com/aladilashrafi)
 - Markimist: [markimist.com](https://markimist.com)
 - Bangla Track: [banglatrack.com](https://banglatrack.com)
