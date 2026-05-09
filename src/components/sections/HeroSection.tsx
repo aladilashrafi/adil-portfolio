@@ -52,8 +52,7 @@ export function HeroSection() {
                 className="font-display font-extrabold leading-[0.93] mb-1"
                 style={{ fontSize: 'clamp(2.8rem, 10vw, 5.8rem)', letterSpacing: '-0.04em' }}
               >
-                Al Adil<br />
-                <span className="text-blue">Ashrafi</span>
+                Al Adil <span className="text-blue">Ashrafi</span>
               </h1>
             </RevealWrapper>
 

@@ -1,5 +1,6 @@
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
 import type { Client } from '@/lib/api';
+import { SectionHeader } from '@/components/ui/SectionHeader';
 
 export function ClientsSection({ clients = [] }: { clients?: Client[] }) {
   // Duplicate list for seamless loop
@@ -10,8 +11,16 @@ export function ClientsSection({ clients = [] }: { clients?: Client[] }) {
   return (
     <section
       id="clients"
-      className="px-6 lg:px-16 py-16 bg-dark border-t border-[rgba(1,156,255,0.08)]"
+      className="px-6 lg:px-16 py-24 bg-dark border-t border-[rgba(1,156,255,0.08)]"
     >
+      <div className="max-w-[1200px] mx-auto mb-16">
+        <SectionHeader 
+          label="Collaborations" 
+          title="Worked With" 
+          titleAccent="To Scale" 
+        />
+      </div>
+
       <RevealWrapper>
         <div
           className="overflow-hidden border-t border-b border-[rgba(1,156,255,0.08)] py-8 -mx-6 lg:-mx-16"

@@ -6,7 +6,7 @@ export default function NotFound() {
       <p className="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-blue mb-4 flex items-center gap-3">
         <span className="w-6 h-px bg-blue" /> Error 404
       </p>
-      <h1 className="font-syne font-extrabold leading-none tracking-tight gradient-text mb-6"
+      <h1 className="font-display font-extrabold leading-none tracking-tight gradient-text mb-6"
           style={{ fontSize:'clamp(4rem,10vw,9rem)' }}>
         404
       </h1>

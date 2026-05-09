@@ -64,7 +64,7 @@ Next.js 16 Frontend  ──── ISR (revalidate: 3600s) ────▶ CDN / 
 | Language | TypeScript 6 |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com/) |
 | Animation | [Framer Motion 12](https://www.framer-motion.com/) + custom `IntersectionObserver` reveal |
-| Fonts | Syne (display), DM Sans (body), Space Mono (mono) via `next/font/google` |
+| Fonts | Outfit (display), DM Sans (body), Space Mono (mono) via `next/font/google` |
 | Data Fetching | Native `fetch` with Next.js `revalidate` caching |
 | CMS / Backend | WordPress with a custom REST API plugin |
 | Image Optimisation | `next/image` + `sharp` |
@@ -367,7 +367,7 @@ Colours are defined as CSS variables in `src/app/globals.css`. The core accent c
 - **Dark** backgrounds: `--color-dark`, `--color-dark-2`
 
 Fonts are loaded in `src/app/layout.tsx` via `next/font/google`:
-- `--font-syne` → display headings (`font-display`)
+- `--font-outfit` → display headings (`font-display`)
 - `--font-dm-sans` → body text (`font-body`)
 - `--font-space-mono` → monospace labels (`font-mono`)
 

@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-import { Syne, DM_Sans, Space_Mono } from 'next/font/google';
+import { Outfit, DM_Sans, Space_Mono } from 'next/font/google';
 import './globals.css';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
 
-const syne = Syne({
+const outfit = Outfit({
   subsets: ['latin'],
-  weight: ['400', '500', '700', '800'],
-  variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-outfit',
   display: 'swap',
 });
 
@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${dmSans.variable} ${spaceMono.variable}`}
+      className={`${outfit.variable} ${dmSans.variable} ${spaceMono.variable}`}
       suppressHydrationWarning
     >
       <body className="font-body" suppressHydrationWarning>

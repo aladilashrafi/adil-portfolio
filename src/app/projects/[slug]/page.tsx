@@ -57,9 +57,6 @@ export default async function ProjectDetailPage({ params }: Props) {
             </h1>
           </RevealWrapper>
 
-          <RevealWrapper delay={160}>
-            {/* Removed project.description to avoid duplication as it is usually included in project.content */}
-          </RevealWrapper>
 
           <RevealWrapper delay={220}>
             <div className="flex flex-wrap gap-12 pt-10 border-t border-[rgba(1,156,255,0.1)]">

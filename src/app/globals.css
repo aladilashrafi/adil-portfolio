@@ -28,11 +28,11 @@
   --color-border-blue: rgba(1,156,255,0.15);
   --color-border-subtle: rgba(1,156,255,0.1);
 
-  --font-display: var(--font-syne), sans-serif;
+  --font-display: var(--font-outfit), sans-serif;
   --font-body: var(--font-dm-sans), sans-serif;
   --font-mono: var(--font-space-mono), monospace;
 
-  --font-syne: var(--font-syne), sans-serif;
+  --font-syne: var(--font-outfit), sans-serif;
   --font-baskerville: var(--font-dm-sans), sans-serif;
 
   --animate-marquee: marquee 25s linear infinite;

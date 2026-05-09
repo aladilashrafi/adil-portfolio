@@ -8,8 +8,8 @@ export function ServicesSection({ services }: { services: Service[] }) {
       <div className="max-w-[1200px] mx-auto">
         <SectionHeader 
           label="Services" 
-          title="The compounds I" 
-          titleAccent="create" 
+          title="The compounds" 
+          titleAccent="I create" 
         />
 
         <RevealWrapper delay={100}>

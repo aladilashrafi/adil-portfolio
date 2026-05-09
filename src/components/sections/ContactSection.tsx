@@ -61,8 +61,8 @@ export function ContactSection() {
           <div className="text-center">
             <SectionHeader
               label="Contact"
-              title="Start a"
-              titleAccent="project"
+              title="Ready to Accelerate"
+              titleAccent="your growth?"
               centered
             />
           </div>
@@ -70,7 +70,7 @@ export function ContactSection() {
 
         <RevealWrapper delay={80}>
           <p className="text-muted text-center mt-4 mb-4">
-            Open to freelance projects, consulting, and full-time opportunities.
+            Whether you need to scale organic traffic, launch a high-converting campaign, or build something entirely new — let's talk about what's possible.
           </p>
         </RevealWrapper>
 
