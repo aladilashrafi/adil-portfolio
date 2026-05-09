@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const NAV_LINKS = [
-  { href: '#about',      label: 'About'      },
-  { href: '#services',   label: 'Services'   },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects',   label: 'Projects'   },
-  { href: '#contact',    label: 'Contact'     },
+  { href: '/#about',      label: 'About'      },
+  { href: '/#services',   label: 'Services'   },
+  { href: '/#experience', label: 'Experience' },
+  { href: '/#projects',   label: 'Projects'   },
+  { href: '/#contact',    label: 'Contact'     },
 ];
 
 export function Nav() {
@@ -30,7 +30,7 @@ export function Nav() {
           scrolled ? 'bg-[rgba(11,22,34,0.85)] backdrop-blur-md border-b border-[rgba(1,156,255,0.08)]' : 'bg-transparent'
         }`}
       >
-        <Link href="#hero" className="font-display font-extrabold text-[1.15rem] text-text tracking-tight group">
+        <Link href="/" className="font-display font-extrabold text-[1.15rem] text-text tracking-tight group">
           Al Adil <span className="text-blue group-hover:text-text transition-colors duration-300">Ashrafi</span>
         </Link>
 
@@ -38,12 +38,12 @@ export function Nav() {
         <ul className="hidden md:flex items-center gap-10">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
-              <a
+              <Link
                 href={link.href}
                 className="font-mono text-[0.62rem] tracking-[0.16em] uppercase text-muted hover:text-blue transition-colors duration-200"
               >
                 {link.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -72,25 +72,25 @@ export function Nav() {
               </a>
             </div>
             
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="btn-clip inline-flex items-center gap-2 bg-blue text-white font-mono text-[0.65rem] tracking-[0.1em] uppercase px-7 py-3 transition-all duration-200 hover:bg-[#0088e0] hover:-translate-y-0.5"
               style={{ borderRadius: '2px' }}
             >
               Let's Work →
-            </a>
+            </Link>
           </div>
         )}
 
         {!mounted && (
           <div className="hidden md:block">
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="btn-clip inline-flex items-center gap-2 bg-blue text-white font-mono text-[0.65rem] tracking-[0.1em] uppercase px-7 py-3 transition-all duration-200 hover:bg-[#0088e0]"
               style={{ borderRadius: '2px' }}
             >
               Let's Work →
-            </a>
+            </Link>
           </div>
         )}
 
@@ -112,14 +112,14 @@ export function Nav() {
         }`}
       >
         {NAV_LINKS.map((link) => (
-          <a
+          <Link
             key={link.href}
             href={link.href}
             onClick={() => setMenuOpen(false)}
             className="font-display font-bold text-2xl text-text hover:text-blue transition-colors"
           >
             {link.label}
-          </a>
+          </Link>
         ))}
         
         <div className="flex gap-6 mt-4">
@@ -131,14 +131,14 @@ export function Nav() {
           </a>
         </div>
 
-        <a
-          href="#contact"
+        <Link
+          href="/#contact"
           onClick={() => setMenuOpen(false)}
           className="font-mono text-[0.7rem] tracking-[0.2em] uppercase text-blue border border-blue px-10 py-4 mt-4"
           style={{ borderRadius: '2px' }}
         >
           Let's Work →
-        </a>
+        </Link>
       </div>
     </>
   );

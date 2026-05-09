@@ -58,9 +58,7 @@ export default async function ProjectDetailPage({ params }: Props) {
           </RevealWrapper>
 
           <RevealWrapper delay={160}>
-            <p className="font-body text-[1.1rem] text-muted leading-[1.8] max-w-3xl mb-12">
-              {project.description}
-            </p>
+            {/* Removed project.description to avoid duplication as it is usually included in project.content */}
           </RevealWrapper>
 
           <RevealWrapper delay={220}>
@@ -75,7 +73,7 @@ export default async function ProjectDetailPage({ params }: Props) {
               </div>
               <div>
                 <p className="font-mono text-[0.58rem] tracking-[0.16em] uppercase text-muted mb-2">Status</p>
-                <p className="font-display font-bold text-blue text-[0.95rem] capitalize">{project.status}</p>
+                <p className={`font-display font-bold text-[0.95rem] capitalize ${project.status === 'live' ? 'text-green' : 'text-blue'}`}>{project.status}</p>
               </div>
             </div>
           </RevealWrapper>
@@ -90,7 +88,7 @@ export default async function ProjectDetailPage({ params }: Props) {
             <RevealWrapper>
               <h2 className="font-display font-bold text-[2rem] text-text mb-6">About the Project</h2>
               <div 
-                className="prose prose-invert max-w-none prose-p:text-muted prose-p:leading-[1.8] prose-h3:text-text prose-h3:font-display prose-a:text-blue"
+                className="prose prose-invert max-w-none prose-p:text-muted prose-p:leading-[1.8] prose-h3:text-text prose-h3:font-display prose-a:text-blue whitespace-pre-wrap"
                 dangerouslySetInnerHTML={{ __html: project.content || '<p>Detailed case study content is being updated. Check back soon for the full breakdown of strategy, execution, and results.</p>' }}
               />
             </RevealWrapper>
@@ -142,14 +140,25 @@ export default async function ProjectDetailPage({ params }: Props) {
                   Key Results
                 </h3>
                 <ul className="flex flex-col gap-4 list-none p-0 m-0">
-                  <li className="flex items-start gap-3">
-                    <span className="text-blue mt-1">✓</span>
-                    <span className="text-muted text-[0.9rem] leading-[1.6]">Performance metrics updating soon</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-blue mt-1">✓</span>
-                    <span className="text-muted text-[0.9rem] leading-[1.6]">Growth statistics pending</span>
-                  </li>
+                  {project.key_results && project.key_results.length > 0 ? (
+                    project.key_results.map((result, idx) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <span className="text-blue mt-1">✓</span>
+                        <span className="text-muted text-[0.9rem] leading-[1.6]">{result}</span>
+                      </li>
+                    ))
+                  ) : (
+                    <>
+                      <li className="flex items-start gap-3">
+                        <span className="text-blue mt-1">✓</span>
+                        <span className="text-muted text-[0.9rem] leading-[1.6]">Performance metrics updating soon</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-blue mt-1">✓</span>
+                        <span className="text-muted text-[0.9rem] leading-[1.6]">Growth statistics pending</span>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </div>
             </RevealWrapper>

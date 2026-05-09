@@ -87,7 +87,7 @@ export function ExperienceSection({ experience, skills }: { experience: Experien
             {/* Timeline Line */}
             <div className="absolute left-0 top-0 bottom-0 w-px bg-[rgba(1,156,255,0.13)] hidden sm:block" />
 
-            <div className="space-y-12 sm:pl-10">
+            <div className="space-y-12 pl-4 sm:pl-10">
               {work.map((job, i) => (
                 <RevealWrapper key={job.id} delay={100 + i * 100}>
                   <div className="relative group">

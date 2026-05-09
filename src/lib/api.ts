@@ -17,11 +17,14 @@ export interface Project {
   status: 'live' | 'development';
   featured: boolean;
   tech_tags: string[];
+  excerpt?: string;
   image_url: string;
   order: number;
   role?: string;
   timeline?: string;
   content?: string;
+  categories?: any[];
+  key_results?: string[];
 }
 
 export interface Service {
@@ -145,7 +148,11 @@ export async function getPortfolioData(): Promise<PortfolioData> {
   try {
     const data = await apiFetch<PortfolioData>('/portfolio', 3600);
     return {
-      ...data,
+      projects: data.projects || [],
+      services: data.services || [],
+      experience: data.experience || [],
+      skills: data.skills || [],
+      testimonials: data.testimonials || [],
       clients: data.clients || [],
     };
   } catch {

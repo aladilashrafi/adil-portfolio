@@ -151,9 +151,9 @@ Displays all projects fetched from the CMS. Each card links to its detail page.
 Dynamically generated at build time via `generateStaticParams()` (SSG), then revalidated hourly (ISR). Displays:
 - Badge, name, description
 - Role, timeline, and status metadata
-- Full HTML content via `dangerouslySetInnerHTML` (from WordPress WYSIWYG)
+- Full HTML content via `dangerouslySetInnerHTML` (from WordPress WYSIWYG) with premium prose styling (blockquotes, responsive tables)
 - Tech stack tags
-- Key results sidebar
+- Key results sidebar (dynamically populated from backend array)
 - Link to live project or "Follow Progress" for in-development projects
 
 ### `/resume` — CV Page
@@ -204,7 +204,7 @@ All data fetching is centralised in `src/lib/api.ts`. The base URL defaults to `
 
 | Interface | Description |
 |---|---|
-| `Project` | id, slug, name, badge, description, url, status, featured, tech_tags, image_url, role, timeline, content |
+| `Project` | id, slug, name, badge, description, url, status, featured, tech_tags, image_url, role, timeline, content, key_results (array) |
 | `Service` | id, num, icon, name, description, order |
 | `ExperienceItem` | id, period, role, company, description, type (`work` \| `education`), order |
 | `Skill` | id, name, percentage, category, order |
