@@ -9,16 +9,15 @@ interface Props {
 
 export function SectionHeader({ label, title, titleAccent, centered = false }: Props) {
   return (
-    <div className={`mb-12 ${centered ? 'text-center' : ''}`}>
+    <div className={`mb-12 ${centered ? 'text-center' : 'text-center lg:text-left'}`}>
       <RevealWrapper>
         <p
           className={`font-mono text-[0.64rem] tracking-[0.22em] uppercase text-orange
-                      flex items-center gap-3 mb-3 ${centered ? 'justify-center' : ''}`}
+                      flex items-center gap-3 mb-3 ${centered ? 'justify-center' : 'justify-center lg:justify-start'}`}
         >
-          {centered && <span className="w-8 h-px bg-orange inline-block" />}
+          <span className={`w-8 h-px bg-orange inline-block ${centered ? '' : 'lg:hidden'}`} />
           {label}
-          {!centered && <span className="w-8 h-px bg-orange inline-block" />}
-          {centered && <span className="w-8 h-px bg-orange inline-block" />}
+          <span className="w-8 h-px bg-orange inline-block" />
         </p>
       </RevealWrapper>
       <RevealWrapper delay={80}>

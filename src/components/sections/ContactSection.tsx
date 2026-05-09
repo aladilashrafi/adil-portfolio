@@ -230,7 +230,7 @@ export function ContactSection() {
         <RevealWrapper delay={300}>
           <div className="flex justify-center gap-6 mt-10 pt-8 border-t border-[rgba(1,156,255,0.08)]">
             <a
-              href="https://linkedin.com/in/aladilashrafisaikat"
+              href="https://www.linkedin.com/in/al-adil-ashrafi/"
               target="_blank"
               rel="noreferrer"
               className="font-mono text-[0.62rem] tracking-[0.12em] uppercase text-muted border-b border-transparent pb-0.5 transition-all duration-200 hover:text-blue hover:border-blue"

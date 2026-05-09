@@ -18,7 +18,7 @@ export function Footer() {
           GitHub
         </a>
         <a 
-          href="https://linkedin.com/in/aladilashrafisaikat" 
+          href="https://www.linkedin.com/in/al-adil-ashrafi/" 
           target="_blank" 
           rel="noreferrer" 
           className="font-mono text-[0.6rem] tracking-[0.16em] uppercase text-muted hover:text-blue transition-colors flex items-center gap-2"

@@ -1,6 +1,6 @@
 export function FlaskSvg() {
   return (
-    <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg" width="100%" style={{ maxWidth: 360 }}>
+    <svg viewBox="40 20 320 360" xmlns="http://www.w3.org/2000/svg" width="500" height="525" className="max-w-full h-auto">
       {/* flask body */}
       <path
         d="M155 85 L155 225 Q155 285 128 315 L272 315 Q245 285 245 225 L245 85 Z"

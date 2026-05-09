@@ -6,13 +6,11 @@ export function ServicesSection({ services }: { services: Service[] }) {
   return (
     <section id="services" className="px-6 lg:px-16 py-24 bg-dark">
       <div className="max-w-[1200px] mx-auto">
-        <RevealWrapper>
-          <SectionHeader 
-            label="Services" 
-            title="The compounds I" 
-            titleAccent="create" 
-          />
-        </RevealWrapper>
+        <SectionHeader 
+          label="Services" 
+          title="The compounds I" 
+          titleAccent="create" 
+        />
 
         <RevealWrapper delay={100}>
           <div

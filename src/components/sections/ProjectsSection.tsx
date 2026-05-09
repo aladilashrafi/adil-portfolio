@@ -6,14 +6,12 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
   return (
     <section id="projects" className="px-6 lg:px-16 py-24 bg-dark">
       <div className="max-w-[1200px] mx-auto">
-        <div className="flex items-end justify-between mb-12">
-          <RevealWrapper>
-            <SectionHeader 
-              label="Projects" 
-              title="Case studies &" 
-              titleAccent="formulas" 
-            />
-          </RevealWrapper>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+          <SectionHeader 
+            label="Projects" 
+            title="Case studies &" 
+            titleAccent="formulas" 
+          />
           <RevealWrapper delay={80}>
             <a
               href="https://adilashrafi.com"

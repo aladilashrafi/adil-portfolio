@@ -38,6 +38,7 @@ export interface ExperienceItem {
   period: string;
   role: string;
   company: string;
+  company_url?: string;
   description: string;
   type: 'work' | 'education';
   order: number;
@@ -132,7 +133,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 export async function getSiteSettings(): Promise<any> {
   return {
     email: 'hello@adilashrafi.com',
-    linkedin: 'https://linkedin.com/in/aladilashrafisaikat',
+    linkedin: 'https://www.linkedin.com/in/al-adil-ashrafi/',
     location: 'Mohammadpur, Dhaka',
     availability: 'Available',
   };

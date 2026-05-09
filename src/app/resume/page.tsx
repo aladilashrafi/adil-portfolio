@@ -80,7 +80,13 @@ export default async function ResumePage() {
                     <h3 className="font-display font-bold text-[1rem] text-text">{item.role}</h3>
                     <span className="font-mono text-[0.62rem] text-muted">{item.period}</span>
                   </div>
-                  <p className="font-mono text-[0.68rem] text-blue tracking-[0.06em] mb-2">{item.company}</p>
+                  {item.company_url ? (
+                    <a href={item.company_url} target="_blank" rel="noopener noreferrer" className="font-mono text-[0.68rem] text-blue tracking-[0.06em] mb-2 hover:underline inline-block">
+                      {item.company}
+                    </a>
+                  ) : (
+                    <p className="font-mono text-[0.68rem] text-blue tracking-[0.06em] mb-2">{item.company}</p>
+                  )}
                   <p className="text-[0.82rem] text-muted leading-[1.7]">{item.description}</p>
                 </div>
               ))}
@@ -100,7 +106,13 @@ export default async function ResumePage() {
                     <h3 className="font-display font-bold text-[1rem] text-text">{item.role}</h3>
                     <span className="font-mono text-[0.62rem] text-muted">{item.period}</span>
                   </div>
-                  <p className="font-mono text-[0.68rem] text-blue tracking-[0.06em] mb-2">{item.company}</p>
+                  {item.company_url ? (
+                    <a href={item.company_url} target="_blank" rel="noopener noreferrer" className="font-mono text-[0.68rem] text-blue tracking-[0.06em] mb-2 hover:underline inline-block">
+                      {item.company}
+                    </a>
+                  ) : (
+                    <p className="font-mono text-[0.68rem] text-blue tracking-[0.06em] mb-2">{item.company}</p>
+                  )}
                   <p className="text-[0.82rem] text-muted leading-[1.7]">{item.description}</p>
                 </div>
               ))}

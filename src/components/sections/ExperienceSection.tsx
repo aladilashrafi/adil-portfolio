@@ -13,13 +13,11 @@ export function ExperienceSection({ experience, skills }: { experience: Experien
           
           {/* Left Column: Education & Skills */}
           <div>
-            <RevealWrapper>
-              <SectionHeader 
-                label="Experience" 
-                title="The reaction" 
-                titleAccent="history" 
-              />
-            </RevealWrapper>
+            <SectionHeader 
+              label="Experience" 
+              title="The reaction" 
+              titleAccent="history" 
+            />
 
             {/* Education */}
             <div className="mt-12">
@@ -39,7 +37,13 @@ export function ExperienceSection({ experience, skills }: { experience: Experien
                       </div>
                       <div>
                         <h4 className="font-display font-bold text-[0.95rem] text-text leading-tight">{edu.role}</h4>
-                        <p className="text-[0.82rem] text-blue mt-1">{edu.company}</p>
+                        {edu.company_url ? (
+                          <a href={edu.company_url} target="_blank" rel="noopener noreferrer" className="text-[0.82rem] text-blue mt-1 hover:underline">
+                            {edu.company}
+                          </a>
+                        ) : (
+                          <p className="text-[0.82rem] text-blue mt-1">{edu.company}</p>
+                        )}
                         <p className="font-mono text-[0.58rem] text-muted mt-1.5">{edu.period}</p>
                       </div>
                     </div>
@@ -97,7 +101,13 @@ export function ExperienceSection({ experience, skills }: { experience: Experien
                       {job.role}
                     </h3>
                     <div className="text-[0.88rem] text-blue font-medium mb-4">
-                      {job.company}
+                      {job.company_url ? (
+                        <a href={job.company_url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                          {job.company}
+                        </a>
+                      ) : (
+                        job.company
+                      )}
                     </div>
                     <p className="text-[0.84rem] text-muted leading-[1.7]">
                       {job.description}

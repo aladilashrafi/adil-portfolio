@@ -26,13 +26,11 @@ export function AboutSection() {
           </div>
 
           <div className="order-1 md:order-2 text-center md:text-left">
-            <RevealWrapper delay={100}>
-              <SectionHeader 
-                label="About" 
-                title="Where marketing" 
-                titleAccent="meets growth" 
-              />
-            </RevealWrapper>
+            <SectionHeader 
+              label="About" 
+              title="Where marketing" 
+              titleAccent="meets growth" 
+            />
 
             <RevealWrapper delay={200}>
               <div className="mt-8 space-y-5 text-[0.98rem] text-muted leading-relaxed">

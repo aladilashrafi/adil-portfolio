@@ -8,13 +8,11 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
   return (
     <section id="testimonials" className="px-6 lg:px-16 py-24 bg-dark-2">
       <div className="max-w-[1200px] mx-auto">
-        <RevealWrapper>
-          <SectionHeader 
-            label="Testimonials" 
-            title="Peer" 
-            titleAccent="review" 
-          />
-        </RevealWrapper>
+        <SectionHeader 
+          label="Testimonials" 
+          title="Peer" 
+          titleAccent="review" 
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {testimonials.map((t, i) => (
