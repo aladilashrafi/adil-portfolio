@@ -103,17 +103,17 @@ export function HeroSection() {
 
             <RevealWrapper delay={600}>
               <div className="grid grid-cols-2 sm:flex sm:gap-6 lg:gap-10 justify-center md:justify-start pt-7 border-t border-[rgba(1,156,255,0.1)] gap-y-6">
-                <div>
+                <div className="text-center">
                   <div className="font-display font-extrabold text-[1.8rem] lg:text-[2rem] text-blue leading-none mb-1">4+</div>
-                  <div className="font-mono text-[0.55rem] lg:text-[0.6rem] tracking-[0.14em] uppercase text-muted max-w-[150px]">Years of Experience</div>
+                  <div className="font-mono text-[0.55rem] lg:text-[0.6rem] tracking-[0.14em] uppercase text-muted max-w-[150px] mx-auto">Years of Experience</div>
                 </div>
-                <div>
+                <div className="text-center">
                   <div className="font-display font-extrabold text-[1.8rem] lg:text-[2rem] text-blue leading-none mb-1">30+</div>
-                  <div className="font-mono text-[0.55rem] lg:text-[0.6rem] tracking-[0.14em] uppercase text-muted max-w-[150px]">Brands Scaled</div>
+                  <div className="font-mono text-[0.55rem] lg:text-[0.6rem] tracking-[0.14em] uppercase text-muted max-w-[150px] mx-auto">Brands Scaled</div>
                 </div>
-                <div className="col-span-2 sm:col-span-1">
+                <div className="col-span-2 sm:col-span-1 text-center">
                   <div className="font-display font-extrabold text-[1.8rem] lg:text-[2rem] text-blue leading-none mb-1">3</div>
-                  <div className="font-mono text-[0.55rem] lg:text-[0.6rem] tracking-[0.14em] uppercase text-muted max-w-[150px]">Products Built</div>
+                  <div className="font-mono text-[0.55rem] lg:text-[0.6rem] tracking-[0.14em] uppercase text-muted max-w-[150px] mx-auto">Products Built</div>
                 </div>
               </div>
             </RevealWrapper>
