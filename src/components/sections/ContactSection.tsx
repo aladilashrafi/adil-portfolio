@@ -15,7 +15,12 @@ interface FormState {
   budget: string;
 }
 
-export function ContactSection() {
+export function ContactSection({ profile }: { profile: any }) {
+  const email = profile?.email || 'hello@adilashrafi.com';
+  const phone = profile?.phone || '+880 1853 837221'; // Phone might need adding to profile fetch
+  const location = profile?.location || 'Mohammadpur, Dhaka';
+  const linkedin = profile?.social?.linkedin || 'https://www.linkedin.com/in/al-adil-ashrafi/';
+
   const [form, setForm] = useState<FormState>({
     name: '',
     email: '',
@@ -42,6 +47,11 @@ export function ContactSection() {
     if (!emailOk) {
       setStatus('error');
       setFeedback('Please enter a valid email address.');
+      return;
+    }
+    if (form.message.length < 10) {
+      setStatus('error');
+      setFeedback('Message is too short. Please provide a bit more detail (at least 10 characters).');
       return;
     }
     setStatus('sending');
@@ -80,13 +90,13 @@ export function ContactSection() {
               <p className="font-mono text-[0.58rem] tracking-[0.16em] uppercase text-muted mb-1">
                 Phone
               </p>
-              <p className="text-[0.92rem] text-text font-medium">+880 1853 837221</p>
+              <p className="text-[0.92rem] text-text font-medium">{phone}</p>
             </div>
             <div className="text-center">
               <p className="font-mono text-[0.58rem] tracking-[0.16em] uppercase text-muted mb-1">
                 Location
               </p>
-              <p className="text-[0.92rem] text-text font-medium">Mohammadpur, Dhaka</p>
+              <p className="text-[0.92rem] text-text font-medium">{location}</p>
             </div>
             <div className="text-center">
               <p className="font-mono text-[0.58rem] tracking-[0.16em] uppercase text-muted mb-1">
@@ -100,7 +110,7 @@ export function ContactSection() {
         <RevealWrapper delay={200}>
           <div className="flex gap-3 justify-center mt-8 flex-wrap">
             <a
-              href="mailto:hello@adilashrafi.com"
+              href={`mailto:${email}`}
               className="btn-clip inline-flex items-center gap-2 bg-blue text-white font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:bg-[#0088e0] hover:-translate-y-px"
               style={{ borderRadius: '2px' }}
             >
@@ -230,7 +240,7 @@ export function ContactSection() {
         <RevealWrapper delay={300}>
           <div className="flex justify-center gap-6 mt-10 pt-8 border-t border-[rgba(1,156,255,0.08)]">
             <a
-              href="https://www.linkedin.com/in/al-adil-ashrafi/"
+              href={linkedin}
               target="_blank"
               rel="noreferrer"
               className="font-mono text-[0.62rem] tracking-[0.12em] uppercase text-muted border-b border-transparent pb-0.5 transition-all duration-200 hover:text-blue hover:border-blue"

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Outfit, DM_Sans, Space_Mono } from 'next/font/google';
 import './globals.css';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
+import { getPortfolioData } from '@/lib/api';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -25,28 +26,32 @@ const spaceMono = Space_Mono({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  title: 'Al Adil Ashrafi - The Marketing Alchemist',
-  description:
-    'Digital marketing specialist bridging marketing and technology. Co-founder of Markimist. Creator of Bangla Track.',
-  openGraph: {
-    title: 'Al Adil Ashrafi - The Marketing Alchemist',
-    description:
-      'Digital marketer, entrepreneur, and builder turning data into growth and strategy into revenue.',
-    url: 'https://adilashrafi.com',
-    siteName: 'Al Adil Ashrafi',
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Al Adil Ashrafi - The Marketing Alchemist',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { profile } = await getPortfolioData();
+  const title = `${profile.name || 'Al Adil Ashrafi'} — ${profile.tagline || 'The Marketing Alchemist'}`;
+  const description = profile.bio?.replace(/<[^>]*>/g, '').slice(0, 160) || 'Digital marketing specialist bridging marketing and technology.';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: 'https://adilashrafi.com',
+      siteName: profile.name || 'Al Adil Ashrafi',
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

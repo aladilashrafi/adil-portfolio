@@ -3,6 +3,8 @@ import { SectionHeader } from '@/components/ui/SectionHeader';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
 
 export function ServicesSection({ services }: { services: Service[] }) {
+  if (!services || services.length === 0) return null;
+
   return (
     <section id="services" className="px-6 lg:px-16 py-24 bg-dark">
       <div className="max-w-[1200px] mx-auto">
@@ -43,17 +45,19 @@ function ServiceCard({ svc }: { svc: Service; index: number }) {
         {svc.num}
       </p>
 
-      <span className="text-[1.4rem] mb-3 block">
-        {svc.icon}
-      </span>
+      <span 
+        className="text-[1.4rem] mb-3 block text-blue [&_svg]:w-8 [&_svg]:h-8 [&_svg_*]:fill-current [&_svg_*]:stroke-current"
+        dangerouslySetInnerHTML={{ __html: svc.icon }}
+      />
 
       <h3 className="font-display font-bold text-base text-text leading-tight mb-3">
         {svc.name}
       </h3>
 
-      <p className="text-[0.84rem] text-muted leading-[1.65]">
-        {svc.description}
-      </p>
+      <div 
+        className="text-[0.84rem] text-muted leading-[1.65]"
+        dangerouslySetInnerHTML={{ __html: svc.description }}
+      />
     </div>
   );
 }

@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: 'adilashrafi.com',
         pathname: '/wp-content/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.adilashrafi.com',
+        pathname: '/wp-content/uploads/**',
+      },
     ],
   },
   // ISR + SSR hybrid — pages revalidate every 60s

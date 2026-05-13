@@ -1,7 +1,11 @@
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
 import { AtomSvg } from '@/components/ui/AtomSvg';
 
-export function HeroSection() {
+export function HeroSection({ resumeUrl, profile }: { resumeUrl: string | null; profile: any }) {
+  const nameParts = (profile.name || 'Al Adil Ashrafi').split(' ');
+  const firstName = nameParts.slice(0, -1).join(' ');
+  const lastName = nameParts.slice(-1)[0];
+
   return (
     <section id="hero" className="min-h-screen flex items-center px-6 lg:px-16 pt-32 pb-20 relative overflow-hidden">
       {/* Background grid */}
@@ -43,7 +47,7 @@ export function HeroSection() {
             <RevealWrapper>
               <div className="inline-flex items-center gap-2 font-mono text-[0.62rem] tracking-[0.16em] uppercase text-blue bg-[rgba(1,156,255,0.08)] border border-[rgba(1,156,255,0.22)] px-4 py-1.5 mb-8" style={{ borderRadius: '2px' }}>
                 <span className="w-1.5 h-1.5 rounded-full bg-blue animate-[pulseDot_2s_ease_infinite]" />
-                Available · Dhaka, BD
+                Available · {profile.location || 'Mohammadpur, Dhaka'}
               </div>
             </RevealWrapper>
 
@@ -52,7 +56,7 @@ export function HeroSection() {
                 className="font-display font-extrabold leading-[0.93] mb-1"
                 style={{ fontSize: 'clamp(2.8rem, 10vw, 5.8rem)', letterSpacing: '-0.04em' }}
               >
-                Al Adil <span className="text-blue">Ashrafi</span>
+                {firstName} <span className="text-blue">{lastName}</span>
               </h1>
             </RevealWrapper>
 
@@ -61,7 +65,7 @@ export function HeroSection() {
                 className="font-display italic text-muted mb-4"
                 style={{ fontSize: 'clamp(1.4rem, 5vw, 2.6rem)', letterSpacing: '-0.025em' }}
               >
-                The Marketing Alchemist
+                {profile.tagline || 'The Marketing Alchemist'}
               </p>
             </RevealWrapper>
 
@@ -73,11 +77,10 @@ export function HeroSection() {
             </RevealWrapper>
 
             <RevealWrapper delay={400}>
-              <p className="text-[0.95rem] lg:text-[1.05rem] text-muted leading-[1.8] max-w-[500px] mx-auto md:mx-0 mb-9">
-                <strong className="text-text font-medium">Digital marketing specialist</strong> who blends data-driven strategy with creative precision - turning raw signals into sustainable growth, brand authority, and measurable ROI.
-                Co-founder of <a href="https://markimist.com" target="_blank" rel="noreferrer" className="text-blue hover:underline">Markimist</a>.
-                Creator of <a href="https://banglatrack.com" target="_blank" rel="noreferrer" className="text-blue hover:underline">Bangla Track</a>.
-              </p>
+              <div 
+                className="text-[0.95rem] lg:text-[1.05rem] text-muted leading-[1.8] max-w-[500px] mx-auto md:mx-0 mb-9 [&_strong]:text-text [&_strong]:font-medium [&_a]:text-blue [&_a]:hover:underline"
+                dangerouslySetInnerHTML={{ __html: profile.hero_bio || 'Digital marketing specialist who blends data-driven strategy with creative precision.' }}
+              />
             </RevealWrapper>
 
             <RevealWrapper delay={500}>
@@ -90,7 +93,7 @@ export function HeroSection() {
                   Let's Work →
                 </a>
                 <a
-                  href="https://adilashrafi.com/resume/"
+                  href={resumeUrl || '#'}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 border border-orange text-orange font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:bg-orange hover:text-white"

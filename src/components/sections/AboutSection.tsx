@@ -13,7 +13,7 @@ const TAGS = [
   { label: 'Growth Strategy',   variant: 'orange' as const },
 ];
 
-export function AboutSection() {
+export function AboutSection({ profile }: { profile: any }) {
   return (
     <section id="about" className="px-6 md:px-16 py-24 bg-dark-2">
       <div className="max-w-[1200px] mx-auto">
@@ -33,17 +33,10 @@ export function AboutSection() {
             />
 
             <RevealWrapper delay={200}>
-              <div className="mt-8 space-y-5 text-[0.98rem] text-muted leading-relaxed">
-                <p>
-                  I'm <strong className="text-text">Al Adil Ashrafi Saikat</strong> - a Bangladeshi digital marketing professional, entrepreneur, and The Marketing Alchemist.
-                </p>
-                <p>
-                  Just as a chemist transforms raw elements into new compounds, I transform <strong className="text-text">brands, data, and creative strategy</strong> into compounding digital growth - organic, paid, and everything in between.
-                </p>
-                <p>
-                  Currently leading digital growth at <strong className="text-text">Mediusware Limited</strong>, operating <a href="https://markimist.com" target="_blank" rel="noreferrer" className="text-blue hover:underline">Markimist</a>, and building <a href="https://banglatrack.com" target="_blank" rel="noreferrer" className="text-blue hover:underline">Bangla Track</a> - a courier management solution serving Bangladesh's e-commerce market.
-                </p>
-              </div>
+              <div 
+                className="mt-8 space-y-5 text-[0.98rem] text-muted leading-relaxed [&_strong]:text-text [&_a]:text-blue [&_a]:hover:underline"
+                dangerouslySetInnerHTML={{ __html: profile.bio || 'I transform brands, data, and creative strategy into compounding digital growth.' }}
+              />
             </RevealWrapper>
 
             <RevealWrapper delay={300}>

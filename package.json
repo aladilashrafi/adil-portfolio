@@ -15,7 +15,7 @@
     "framer-motion": "^12.38.0",
     "graphql": "^16.13.2",
     "graphql-request": "^7.4.0",
-    "next": "16.2.4",
+    "next": "^16.2.6",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "sharp": "^0.34.5",
@@ -31,5 +31,8 @@
     "postcss": "^8.5.14",
     "tailwindcss": "^4.2.4",
     "typescript": "^6.0.3"
+  },
+  "overrides": {
+    "postcss": "^8.5.14"
   }
 }

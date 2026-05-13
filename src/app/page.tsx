@@ -14,21 +14,21 @@ import { Footer } from '@/components/layout/Footer';
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  const { projects, services, experience, skills, testimonials, clients } =
+  const { projects, services, experience, skills, testimonials, clients, resumeUrl, profile } =
     await getPortfolioData();
 
   return (
     <main>
-      <Nav />
-      <HeroSection />
-      <AboutSection />
+      <Nav social={profile.social} />
+      <HeroSection resumeUrl={resumeUrl} profile={profile} />
+      <AboutSection profile={profile} />
       <ServicesSection services={services} />
       <ExperienceSection experience={experience} skills={skills} />
       <ProjectsSection projects={projects} />
       <ClientsSection clients={clients} />
       <TestimonialsSection testimonials={testimonials} />
-      <ContactSection />
-      <Footer />
+      <ContactSection profile={profile} />
+      <Footer social={profile.social} name={profile.name} />
     </main>
   );
 }

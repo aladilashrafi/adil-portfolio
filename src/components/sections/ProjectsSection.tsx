@@ -13,18 +13,6 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
             title="Case studies &" 
             titleAccent="formulas" 
           />
-          <RevealWrapper delay={80}>
-            <div className="mt-4 md:mt-0 text-center md:text-right">
-              <a
-                href="https://adilashrafi.com"
-                target="_blank"
-                rel="noreferrer"
-                className="font-mono text-[0.65rem] tracking-[0.14em] uppercase text-blue border-b border-[rgba(1,156,255,0.3)] pb-0.5 transition-colors duration-200 hover:border-blue inline-block"
-              >
-                View all →
-              </a>
-            </div>
-          </RevealWrapper>
         </div>
 
         <RevealWrapper delay={100}>
@@ -60,8 +48,8 @@ function ProjectCard({ project }: { project: Project }) {
             {project.badge}
           </p>
           <span className="w-1 h-1 rounded-full bg-[rgba(1,156,255,0.3)]" />
-          <p className={`font-mono text-[0.58rem] tracking-[0.16em] uppercase ${project.status === 'live' ? 'text-green' : 'text-muted'}`}>
-            {project.status}
+          <p className={`font-mono text-[0.58rem] tracking-[0.16em] uppercase ${project.status === 'live' ? 'text-blue' : 'text-muted'}`}>
+            {project.industry || project.status}
           </p>
         </div>
 

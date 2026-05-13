@@ -1,4 +1,4 @@
-import { getProjectBySlug, getProjects } from '@/lib/api';
+import { getProjectBySlug, getProjects, getPortfolioData } from '@/lib/api';
 import { Nav } from '@/components/layout/Nav';
 import { Footer } from '@/components/layout/Footer';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
@@ -26,13 +26,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug } = await params;
+  const { profile, resumeUrl } = await getPortfolioData();
   const project = await getProjectBySlug(slug);
 
   if (!project) notFound();
 
   return (
     <main className="bg-dark min-h-screen">
-      <Nav />
+      <Nav social={profile.social} />
       
       {/* Header Section */}
       <section className="px-6 lg:px-16 pt-40 pb-20 border-b border-[rgba(1,156,255,0.08)] relative overflow-hidden bg-dark-2">
@@ -112,6 +113,31 @@ export default async function ProjectDetailPage({ params }: Props) {
 
           {/* Sidebar */}
           <div className="order-1 lg:order-2">
+            <RevealWrapper delay={100}>
+              <div className="bg-dark-2 border border-[rgba(1,156,255,0.08)] p-8 mb-8">
+                <h3 className="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-orange mb-6 flex items-center gap-3">
+                  <span className="w-4 h-px bg-orange" />
+                  Project Info
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-mono text-[0.55rem] tracking-[0.1em] uppercase text-muted/60 mb-1">Industry</p>
+                    <p className="text-[0.9rem] text-text">{project.industry || 'General'}</p>
+                  </div>
+                  <div>
+                    <p className="font-mono text-[0.55rem] tracking-[0.1em] uppercase text-muted/60 mb-1">Category</p>
+                    <p className="text-[0.9rem] text-text">{project.badge || 'Professional Work'}</p>
+                  </div>
+                  {project.role && (
+                    <div>
+                      <p className="font-mono text-[0.55rem] tracking-[0.1em] uppercase text-muted/60 mb-1">Client</p>
+                      <p className="text-[0.9rem] text-text">{project.role}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </RevealWrapper>
+
             {project.tech_tags && project.tech_tags.length > 0 && (
               <RevealWrapper delay={150}>
                 <div className="bg-dark-2 border border-[rgba(1,156,255,0.08)] p-8 mb-8">
@@ -164,7 +190,7 @@ export default async function ProjectDetailPage({ params }: Props) {
         </div>
       </section>
 
-      <Footer />
+      <Footer social={profile.social} name={profile.name} />
     </main>
   );
 }

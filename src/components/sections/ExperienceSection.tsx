@@ -109,9 +109,10 @@ export function ExperienceSection({ experience, skills }: { experience: Experien
                         job.company
                       )}
                     </div>
-                    <p className="text-[0.84rem] text-muted leading-[1.7]">
-                      {job.description}
-                    </p>
+                    <div 
+                      className="text-[0.84rem] text-muted leading-[1.7] [&_strong]:text-text [&_strong]:font-medium [&_a]:text-blue [&_a]:hover:underline"
+                      dangerouslySetInnerHTML={{ __html: job.description }}
+                    />
                   </div>
                 </RevealWrapper>
               ))}

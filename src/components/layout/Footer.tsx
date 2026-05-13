@@ -1,15 +1,18 @@
-export function Footer() {
+export function Footer({ social, name }: { social: any; name: string }) {
+  const github = social?.github || 'https://github.com/aladilashrafi';
+  const linkedin = social?.linkedin || 'https://www.linkedin.com/in/al-adil-ashrafi/';
+
   return (
     <footer className="px-6 lg:px-16 py-12 bg-dark border-t border-[rgba(1,156,255,0.08)] flex flex-col md:flex-row items-center justify-between gap-6">
       <div className="text-center md:text-left">
         <p className="font-mono text-[0.62rem] tracking-[0.14em] uppercase text-muted">
-          © {new Date().getFullYear()} <span className="text-text">Al Adil Ashrafi</span>
+          © {new Date().getFullYear()} <span className="text-text">{name || 'Al Adil Ashrafi'}</span>
         </p>
       </div>
 
       <div className="flex items-center gap-8">
         <a 
-          href="https://github.com/aladilashrafi" 
+          href={github} 
           target="_blank" 
           rel="noreferrer" 
           className="font-mono text-[0.6rem] tracking-[0.16em] uppercase text-muted hover:text-blue transition-colors flex items-center gap-2"
@@ -18,7 +21,7 @@ export function Footer() {
           GitHub
         </a>
         <a 
-          href="https://www.linkedin.com/in/al-adil-ashrafi/" 
+          href={linkedin} 
           target="_blank" 
           rel="noreferrer" 
           className="font-mono text-[0.6rem] tracking-[0.16em] uppercase text-muted hover:text-blue transition-colors flex items-center gap-2"
