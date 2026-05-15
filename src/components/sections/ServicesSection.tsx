@@ -1,6 +1,7 @@
 import type { Service } from '@/lib/api';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
+import DynamicIcon from '@/components/ui/DynamicIcon';
 
 export function ServicesSection({ services }: { services: Service[] }) {
   if (!services || services.length === 0) return null;
@@ -45,9 +46,11 @@ function ServiceCard({ svc }: { svc: Service; index: number }) {
         {svc.num}
       </p>
 
-      <span 
-        className="text-[1.4rem] mb-3 block text-blue [&_svg]:w-8 [&_svg]:h-8 [&_svg_*]:fill-current [&_svg_*]:stroke-current"
-        dangerouslySetInnerHTML={{ __html: svc.icon }}
+      <DynamicIcon 
+        name={svc.icon} 
+        className="text-[1.8rem] mb-3 block text-blue"
+        size={32}
+        strokeWidth={1.5}
       />
 
       <h3 className="font-display font-bold text-base text-text leading-tight mb-3">

@@ -24,6 +24,9 @@ export interface Project {
   timeline?: string;
   content?: string;
   categories?: any[];
+  industry?: string;
+  technologies?: any[];
+  industries?: any[];
   key_results?: string[];
 }
 
@@ -50,6 +53,7 @@ export interface ExperienceItem {
 export interface Skill {
   id: number;
   name: string;
+  icon?: string;
   percentage: number;
   category: string;
   order: number;
@@ -148,6 +152,7 @@ function mapSkill(data: any): Skill {
   return {
     id: data.id,
     name: data.title,
+    icon: data.icon || '',
     percentage: Number(data.percentage) || 0,
     category: typeof data.categories?.[0] === 'string' ? data.categories[0] : (data.categories?.[0]?.name || 'Core'),
     order: data.order,

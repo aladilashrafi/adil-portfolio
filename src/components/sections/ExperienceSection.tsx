@@ -1,6 +1,7 @@
 import type { ExperienceItem, Skill } from '@/lib/api';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
+import DynamicIcon from '@/components/ui/DynamicIcon';
 
 export function ExperienceSection({ experience, skills }: { experience: ExperienceItem[]; skills: Skill[] }) {
   const education = experience.filter(item => item.type === 'education');
@@ -66,7 +67,17 @@ export function ExperienceSection({ experience, skills }: { experience: Experien
                   <RevealWrapper key={skill.id} delay={250 + i * 50}>
                     <div className="group">
                       <div className="flex justify-between items-end mb-2">
-                        <span className="font-mono text-[0.64rem] tracking-[0.1em] uppercase text-text">{skill.name}</span>
+                        <div className="flex items-center gap-2">
+                          {skill.icon && (
+                            <DynamicIcon 
+                              name={skill.icon} 
+                              className="text-blue" 
+                              size={16} 
+                              strokeWidth={2} 
+                            />
+                          )}
+                          <span className="font-mono text-[0.64rem] tracking-[0.1em] uppercase text-text">{skill.name}</span>
+                        </div>
                         <span className="font-mono text-[0.6rem] text-muted">{skill.percentage}%</span>
                       </div>
                       <div className="h-[2px] w-full bg-[rgba(1,156,255,0.1)] rounded-full overflow-hidden">

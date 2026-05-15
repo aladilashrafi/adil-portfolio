@@ -1,4 +1,4 @@
-import { getExperience, getSkills, getSiteSettings } from '@/lib/api';
+import { getPortfolioData } from '@/lib/api';
 import { Nav } from '@/components/layout/Nav';
 import { Footer } from '@/components/layout/Footer';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
@@ -12,18 +12,14 @@ export const metadata: Metadata = {
 };
 
 export default async function ResumePage() {
-  const [experience, skills, meta] = await Promise.all([
-    getExperience(),
-    getSkills(),
-    getSiteSettings(),
-  ]);
+  const { experience, skills, profile } = await getPortfolioData();
 
   const work = experience.filter(e => e.type === 'work');
   const edu  = experience.filter(e => e.type === 'education');
 
   return (
     <main>
-      <Nav />
+      <Nav social={profile.social} />
       <section className="px-8 md:px-16 pt-32 pb-24 relative z-10 max-w-screen-lg mx-auto">
 
         {/* Header */}
@@ -37,10 +33,10 @@ export default async function ResumePage() {
             </h1>
             <p className="font-display italic text-[1.2rem] text-muted mb-5">The Marketing Alchemist</p>
             <div className="flex flex-wrap gap-5 font-mono text-[0.65rem] tracking-[0.1em] text-muted">
-              <a href={`mailto:${meta.email}`} className="hover:text-blue transition-colors">{meta.email}</a>
-              <a href={meta.linkedin} target="_blank" rel="noreferrer" className="hover:text-blue transition-colors">LinkedIn</a>
-              <span>{meta.location}</span>
-              <span className="text-green">{meta.availability}</span>
+              <a href={`mailto:${profile.email}`} className="hover:text-blue transition-colors">{profile.email}</a>
+              <a href={profile.social?.linkedin} target="_blank" rel="noreferrer" className="hover:text-blue transition-colors">LinkedIn</a>
+              <span>{profile.location}</span>
+              <span className="text-green">Available</span>
             </div>
           </div>
         </RevealWrapper>
@@ -129,7 +125,7 @@ export default async function ResumePage() {
         </RevealWrapper>
 
       </section>
-      <Footer />
+      <Footer social={profile.social} name={profile.name} />
     </main>
   );
 }
