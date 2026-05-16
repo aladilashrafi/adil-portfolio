@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 const NAV_LINKS = [
   { href: '/#about',      label: 'About'      },
@@ -30,7 +31,7 @@ export function Nav({ social }: { social: any }) {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-[70] h-20 transition-all duration-300 flex items-center justify-between px-6 lg:px-16 ${
-          scrolled ? 'bg-[rgba(11,22,34,0.85)] backdrop-blur-md border-b border-[rgba(1,156,255,0.08)]' : 'bg-transparent'
+          scrolled ? 'bg-[rgba(var(--color-bg-2),0.85)] dark:bg-[rgba(11,22,34,0.85)] bg-bg-2/85 backdrop-blur-md border-b border-[rgba(1,156,255,0.08)]' : 'bg-transparent'
         }`}
       >
         <Link href="/" className="font-display font-extrabold text-[1.15rem] text-text tracking-tight group">
@@ -55,6 +56,7 @@ export function Nav({ social }: { social: any }) {
         {mounted && (
           <div className="hidden md:flex items-center gap-6">
             <div className="flex items-center gap-4 border-r border-[rgba(1,156,255,0.15)] pr-6 mr-1">
+              <ThemeToggle />
               <a 
                 href={github} 
                 target="_blank" 
@@ -98,19 +100,22 @@ export function Nav({ social }: { social: any }) {
         )}
 
         {/* Mobile Toggle */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden w-8 h-8 flex flex-col items-end justify-center gap-1.5 focus:outline-none"
-        >
+        <div className="flex items-center gap-4 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="w-8 h-8 flex flex-col items-end justify-center gap-1.5 focus:outline-none"
+          >
           <span className={`h-0.5 bg-blue transition-all duration-300 ${menuOpen ? 'w-8 rotate-45 translate-y-2' : 'w-7'}`} />
           <span className={`h-0.5 bg-blue transition-all duration-300 ${menuOpen ? 'opacity-0' : 'w-5'}`} />
-          <span className={`h-0.5 bg-blue transition-all duration-300 ${menuOpen ? 'w-8 -rotate-45 -translate-y-2' : 'w-8'}`} />
-        </button>
+            <span className={`h-0.5 bg-blue transition-all duration-300 ${menuOpen ? 'w-8 -rotate-45 -translate-y-2' : 'w-8'}`} />
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-[60] bg-[#0b1622] flex flex-col items-center pt-32 pb-20 justify-start gap-8 transition-transform duration-500 overflow-y-auto md:hidden ${
+        className={`fixed inset-0 z-[60] bg-bg-2 flex flex-col items-center pt-32 pb-20 justify-start gap-8 transition-transform duration-500 overflow-y-auto md:hidden ${
           menuOpen ? 'translate-y-0' : '-translate-y-full'
         }`}
       >

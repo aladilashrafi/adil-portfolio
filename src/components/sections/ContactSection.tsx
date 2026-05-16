@@ -192,7 +192,7 @@ export function ContactSection({ profile }: { profile: any }) {
                     >
                       <option value="">Select a range</option>
                       {BUDGETS.map((b) => (
-                        <option key={b} value={b} style={{ background: '#0b1622' }}>
+                        <option key={b} value={b} style={{ background: 'var(--color-bg-2)' }}>
                           {b}
                         </option>
                       ))}

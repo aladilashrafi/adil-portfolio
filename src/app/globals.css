@@ -5,28 +5,30 @@
 @source "../lib";
 
 @theme {
+  /* Brand Colors */
   --color-blue: #019cff;
   --color-blue-dark: #0088e0;
   --color-orange: #fe5401;
-
-  --color-dark: #050c14;
-  --color-dark-2: #0b1622;
-  --color-dark-3: #0f1e2e;
-  --color-surface: #131f2d;
-  --color-text: #e8f4ff;
-  --color-muted: #6e8fa8;
   --color-green: #2dce89;
 
-  --color-ink: #e8f4ff;
-  --color-ink-dim: #6e8fa8;
-  --color-ink-muted: rgba(110,143,168,0.55);
+  /* Light Theme Colors (Default) */
+  --color-dark: #ffffff;
+  --color-dark-2: #f4f7fb;
+  --color-dark-3: #eaf1f8;
+  --color-surface: #ffffff;
+  --color-text: #0f172a;
+  --color-muted: #64748b;
 
-  --color-bg: #050c14;
-  --color-bg-2: #0b1622;
+  --color-ink: #0f172a;
+  --color-ink-dim: #64748b;
+  --color-ink-muted: rgba(100, 116, 139, 0.55);
 
-  --color-border: rgba(1,156,255,0.08);
-  --color-border-blue: rgba(1,156,255,0.15);
-  --color-border-subtle: rgba(1,156,255,0.1);
+  --color-bg: #ffffff;
+  --color-bg-2: #f4f7fb;
+
+  --color-border: rgba(1, 156, 255, 0.08);
+  --color-border-blue: rgba(1, 156, 255, 0.15);
+  --color-border-subtle: rgba(1, 156, 255, 0.1);
 
   --font-display: var(--font-outfit), sans-serif;
   --font-body: var(--font-dm-sans), sans-serif;
@@ -48,6 +50,27 @@
    so Tailwind utilities can override it
 ══════════════════════════════════════════ */
 @layer base {
+  .dark {
+    /* Dark Theme Colors */
+    --color-dark: #050c14;
+    --color-dark-2: #0b1622;
+    --color-dark-3: #0f1e2e;
+    --color-surface: #131f2d;
+    --color-text: #e8f4ff;
+    --color-muted: #6e8fa8;
+
+    --color-ink: #e8f4ff;
+    --color-ink-dim: #6e8fa8;
+    --color-ink-muted: rgba(110, 143, 168, 0.55);
+
+    --color-bg: #050c14;
+    --color-bg-2: #0b1622;
+
+    --color-border: rgba(1, 156, 255, 0.08);
+    --color-border-blue: rgba(1, 156, 255, 0.15);
+    --color-border-subtle: rgba(1, 156, 255, 0.1);
+  }
+
   *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;

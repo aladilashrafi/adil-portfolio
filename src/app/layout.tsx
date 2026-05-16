@@ -28,7 +28,7 @@ const spaceMono = Space_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
   const { profile } = await getPortfolioData();
-  const title = `${profile.name || 'Al Adil Ashrafi'} — ${profile.tagline || 'The Marketing Alchemist'}`;
+  const title = `${profile.name || 'Al Adil Ashrafi'} - ${profile.tagline || 'The Marketing Alchemist'}`;
   const description = profile.bio?.replace(/<[^>]*>/g, '').slice(0, 160) || 'Digital marketing specialist bridging marketing and technology.';
 
   return {
@@ -53,6 +53,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+import { ThemeProvider } from '@/components/ui/ThemeProvider';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -61,8 +63,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body className="font-body" suppressHydrationWarning>
-        <ScrollProgress />
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <ScrollProgress />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -18,45 +18,60 @@ interface IconProps extends Omit<LucideProps, 'ref'> {
 const DynamicIcon = ({ name, className, size, strokeWidth, ...props }: IconProps) => {
   const sizeStyle = size ? { width: size, height: size } : {};
 
+  if (!name) return null;
+
+  const trimmedName = name.trim();
+
   // 1. Handle Raw SVG String
-  if (name && name.trim().startsWith('<svg')) {
+  if (trimmedName.startsWith('<svg')) {
     return (
       <span
-        className={`${className} inline-block [&_svg]:w-full [&_svg]:h-full [&_svg]:block [&_svg_*]:fill-current [&_svg_*]:stroke-current`}
+        className={`${className} inline-block [&_svg]:w-full [&_svg]:h-full [&_svg]:block`}
         style={sizeStyle}
-        dangerouslySetInnerHTML={{ __html: name }}
+        dangerouslySetInnerHTML={{ __html: trimmedName }}
       />
     );
   }
 
-  // 2. Handle Lucide Icon Name
-  if (name) {
-    // Normalize name to kebab-case (e.g., "RocketLaunch" or "Rocket Launch" -> "rocket-launch")
-    const iconName = name
-      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^a-z0-9-]/g, '') as keyof typeof dynamicIconImports;
-
-    if (dynamicIconImports[iconName]) {
-      const LucideIcon = dynamic(dynamicIconImports[iconName], {
-        loading: () => <div className={className} style={sizeStyle} />,
-      });
-      return (
-        <LucideIcon 
-          className={className} 
-          size={size} 
-          strokeWidth={strokeWidth} 
-          {...(props as any)} 
-        />
-      );
-    }
+  // 2. Handle URL (Image/SVG)
+  const isUrl = trimmedName.startsWith('http') || trimmedName.startsWith('/') || /\.(svg|png|jpg|jpeg|webp|gif|avif)(\?.*)?$/i.test(trimmedName);
+  if (isUrl) {
+    return (
+      <img 
+        src={trimmedName} 
+        alt="" 
+        className={`${className} object-contain`} 
+        style={sizeStyle}
+      />
+    );
   }
 
-  // 3. Fallback: Unicode or plain text
+  // 3. Handle Lucide Icon Name
+  // Normalize name: "RocketLaunch", "rocket-launch", "rocket launch" -> "rocket-launch"
+  const iconName = trimmedName
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '') as keyof typeof dynamicIconImports;
+
+  if (dynamicIconImports[iconName]) {
+    const LucideIcon = dynamic(dynamicIconImports[iconName], {
+      loading: () => <div className={className} style={sizeStyle} />,
+    });
+    return (
+      <LucideIcon 
+        className={className} 
+        size={size} 
+        strokeWidth={strokeWidth} 
+        {...(props as any)} 
+      />
+    );
+  }
+
+  // 4. Fallback: Unicode or plain text
   return (
-    <span className={className} style={sizeStyle}>
-      {name || ''}
+    <span className={`${className} inline-flex items-center justify-center`} style={sizeStyle}>
+      {trimmedName}
     </span>
   );
 };
