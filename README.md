@@ -27,7 +27,7 @@ Live site: **[adilashrafi.com](https://adilashrafi.com)**
 
 ## Overview
 
-This is the **Next.js 16 frontend** for Al Adil Ashrafi's personal portfolio website. It is a headless frontend that pulls all dynamic data — projects, services, experience, skills, testimonials, and clients — from a **WordPress backend** via a custom REST API (`/wp-json/adil/v1`).
+This is the **Next.js 16 frontend** for Al Adil Ashrafi's personal portfolio website. It is a headless frontend that pulls all dynamic data — projects, services, experience, skills, testimonials, and clients — from a **WordPress backend** via a custom REST API (`/wp-json/hpcms/v1`), exposed by the `headless-portfolio-cms` plugin.
 
 The site is designed around three principles:
 
@@ -40,7 +40,7 @@ The site is designed around three principles:
 ## Architecture
 
 ```
-WordPress CMS (adilashrafi.com/wp-json/adil/v1)
+WordPress CMS (adilashrafi.com/wp-json/hpcms/v1)
         │
         │  REST API (JSON)
         ▼
@@ -128,7 +128,7 @@ adil-portfolio/
 
 ### `/` — Homepage
 
-The main landing page. Fetches all portfolio data in a single API call (`GET /portfolio`) and passes it down to each section component. Uses ISR with a 1-hour revalidation window.
+The main landing page. Fetches all portfolio data via `getPortfolioData()` (`src/lib/api.ts`), which fans out into parallel calls against `/projects`, `/experience`, `/education`, `/skills`, `/testimonials`, `/resume`, `/clients`, `/services`, and `/main`, and passes the combined result down to each section component. Uses ISR with a 1-hour revalidation window.
 
 Sections rendered (in order):
 1. **Nav** — Sticky top navigation
@@ -198,7 +198,7 @@ An animated SVG atom illustration used as the hero visual on desktop. Hidden on 
 
 ## Data Layer & CMS Integration
 
-All data fetching is centralised in `src/lib/api.ts`. The base URL defaults to `https://adilashrafi.com/wp-json/adil/v1` but can be overridden via the `NEXT_PUBLIC_WP_API` environment variable.
+All data fetching is centralised in `src/lib/api.ts`. The base URL defaults to `https://api.adilashrafi.com/wp-json/hpcms/v1` but can be overridden via the `NEXT_PUBLIC_WP_API` environment variable.
 
 ### TypeScript Interfaces
 
@@ -210,21 +210,29 @@ All data fetching is centralised in `src/lib/api.ts`. The base URL defaults to `
 | `Skill` | id, name, percentage, category, order |
 | `Testimonial` | id, quote, author, title, company, avatar_url |
 | `Client` | id, name, logo |
+| `PortfolioData` | projects, services, experience, skills, testimonials, clients, resumeUrl, profile |
 | `ContactPayload` | name, email, subject, message, budget |
 
 ### API Endpoints Consumed
 
+Endpoints are provided by the `headless-portfolio-cms` WordPress plugin under the `hpcms/v1` namespace.
+
 | Method | Endpoint | Used by |
 |---|---|---|
-| `GET` | `/portfolio` | Homepage (bulk fetch, single round-trip) |
+| `GET` | `/main` | Site profile (name, tagline, contact info, social links, homepage section copy, SEO) — used across the homepage, projects page, and resume page for nav/footer/contact info |
 | `GET` | `/projects` | Projects listing |
 | `GET` | `/projects?featured=1` | Homepage featured projects |
 | `GET` | `/projects/:slug` | Project detail page |
 | `GET` | `/services` | Services section |
 | `GET` | `/experience` | Experience section, Resume page |
+| `GET` | `/education` | Resume page (merged with `/experience`, sorted by `order`) |
 | `GET` | `/skills` | Experience section, Resume page |
 | `GET` | `/testimonials` | Testimonials section |
+| `GET` | `/resume` | Resume download link (filters items where `type === 'general'`) |
+| `GET` | `/clients` | Clients section |
 | `POST` | `/contact` | Contact form submission |
+
+> `GET /profile` also exists but is **deprecated** as of plugin v1.1.0 in favor of `/main`, and is scheduled for removal in plugin v1.3.0. The frontend does not call it.
 
 ---
 
@@ -233,10 +241,10 @@ All data fetching is centralised in `src/lib/api.ts`. The base URL defaults to `
 Create a `.env.local` file at the root of the project:
 
 ```env
-# Base URL for the WordPress REST API (optional — defaults to https://adilashrafi.com/wp-json/adil/v1)
-NEXT_PUBLIC_WP_API=https://your-wordpress-site.com/wp-json/adil/v1
+# Base URL for the WordPress REST API (optional — defaults to https://api.adilashrafi.com/wp-json/hpcms/v1)
+NEXT_PUBLIC_WP_API=https://your-wordpress-site.com/wp-json/hpcms/v1
 
-# Secret token for on-demand ISR revalidation (must match the WordPress plugin config)
+# Secret token for on-demand ISR revalidation (must match the WordPress plugin's Revalidation Token setting)
 REVALIDATE_TOKEN=your-secret-token-here
 ```
 

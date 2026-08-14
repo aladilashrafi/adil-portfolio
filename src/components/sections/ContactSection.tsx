@@ -120,7 +120,7 @@ export function ContactSection({ profile }: { profile: any }) {
               href="https://markimist.com"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 border border-orange text-orange font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:bg-orange hover:text-white"
+              className="btn-clip-reverse inline-flex items-center gap-2 bg-[rgba(254,84,1,0.12)] text-orange font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:bg-orange hover:text-white"
               style={{ borderRadius: '2px' }}
             >
               Markimist →

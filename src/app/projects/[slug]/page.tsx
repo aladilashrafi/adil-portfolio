@@ -4,6 +4,7 @@ import { Footer } from '@/components/layout/Footer';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 
 export const revalidate = 3600;
 
@@ -16,11 +17,28 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const [project, { seo: siteSeo }] = await Promise.all([getProjectBySlug(slug), getPortfolioData()]);
   if (!project) return { title: 'Project Not Found' };
+
+  const title = project.seo?.title || `${project.name} — Case Study | Al Adil Ashrafi`;
+  const description = project.seo?.description || project.description;
+  const ogImage = project.image_url || siteSeo?.ogImage || '/al-adil-ashrafi-saikat.png';
+
   return {
-    title: `${project.name} — Case Study | Al Adil Ashrafi`,
-    description: project.description,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      images: [{ url: ogImage, width: project.image_url ? project.image_width : undefined, height: project.image_url ? project.image_height : undefined }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 
@@ -78,6 +96,28 @@ export default async function ProjectDetailPage({ params }: Props) {
         </div>
       </section>
 
+      {/* Featured Image Banner */}
+      <div className="px-6 lg:px-16 pt-16 bg-dark">
+        <div className="max-w-[1200px] mx-auto">
+          <RevealWrapper>
+            <div className="relative w-full aspect-video overflow-hidden" style={{ borderRadius: '3px' }}>
+              {project.image_url ? (
+                <Image
+                  src={project.image_url}
+                  alt={project.image_alt || project.name}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 1200px"
+                  className="object-cover"
+                />
+              ) : (
+                <div className="image-fallback-gradient absolute inset-0" />
+              )}
+            </div>
+          </RevealWrapper>
+        </div>
+      </div>
+
       {/* Content Section */}
       <section className="px-6 lg:px-16 py-24 bg-dark">
         <div className="max-w-[1000px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-16">
@@ -85,8 +125,8 @@ export default async function ProjectDetailPage({ params }: Props) {
           <div className="order-2 lg:order-1">
             <RevealWrapper>
               <h2 className="font-display font-bold text-[2rem] text-text mb-6">About the Project</h2>
-              <div 
-                className="prose prose-invert max-w-none prose-p:text-muted prose-p:leading-[1.8] prose-h3:text-text prose-h3:font-display prose-a:text-blue whitespace-pre-wrap"
+              <div
+                className="prose max-w-none"
                 dangerouslySetInnerHTML={{ __html: project.content || '<p>Detailed case study content is being updated. Check back soon for the full breakdown of strategy, execution, and results.</p>' }}
               />
             </RevealWrapper>
@@ -103,7 +143,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 </a>
                 <a
                   href="/projects"
-                  className="inline-flex items-center gap-2 border border-[rgba(1,156,255,0.2)] text-muted font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:border-blue hover:text-text"
+                  className="btn-clip-reverse inline-flex items-center gap-2 bg-[rgba(1,156,255,0.08)] text-muted font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:bg-blue hover:text-white"
                 >
                   ← All Projects
                 </a>

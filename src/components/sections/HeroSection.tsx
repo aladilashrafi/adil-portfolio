@@ -1,7 +1,23 @@
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
 import { AtomSvg } from '@/components/ui/AtomSvg';
+import DynamicIcon from '@/components/ui/DynamicIcon';
+import type { HighlightedCards } from '@/lib/api';
 
-export function HeroSection({ resumeUrl, profile }: { resumeUrl: string | null; profile: any }) {
+const FALLBACK_STATS = [
+  { id: 'years', title: '4+', subtitle: 'Years of Experience', icon: '' },
+  { id: 'brands', title: '30+', subtitle: 'Brands Scaled', icon: '' },
+  { id: 'products', title: '3', subtitle: 'Products Built', icon: '' },
+];
+
+export function HeroSection({
+  resumeUrl,
+  profile,
+  highlightedCards,
+}: {
+  resumeUrl: string | null;
+  profile: any;
+  highlightedCards?: HighlightedCards;
+}) {
   const nameParts = (profile.name || 'Al Adil Ashrafi').split(' ');
   const firstName = nameParts.slice(0, -1).join(' ');
   const lastName = nameParts.slice(-1)[0];
@@ -96,7 +112,7 @@ export function HeroSection({ resumeUrl, profile }: { resumeUrl: string | null; 
                   href={resumeUrl || '#'}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 border border-orange text-orange font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:bg-orange hover:text-white"
+                  className="btn-clip-reverse inline-flex items-center gap-2 bg-[rgba(254,84,1,0.12)] text-orange font-mono text-[0.72rem] tracking-[0.1em] uppercase px-8 py-3.5 transition-all duration-200 hover:bg-orange hover:text-white"
                   style={{ borderRadius: '2px' }}
                 >
                   View Resume
@@ -105,19 +121,20 @@ export function HeroSection({ resumeUrl, profile }: { resumeUrl: string | null; 
             </RevealWrapper>
 
             <RevealWrapper delay={600}>
-              <div className="grid grid-cols-2 sm:flex sm:gap-6 lg:gap-10 justify-center md:justify-start pt-7 border-t border-[rgba(1,156,255,0.1)] gap-y-6">
-                <div className="text-center">
-                  <div className="font-display font-extrabold text-[1.8rem] lg:text-[2rem] text-blue leading-none mb-1">4+</div>
-                  <div className="font-mono text-[0.55rem] lg:text-[0.6rem] tracking-[0.14em] uppercase text-muted max-w-[150px] mx-auto">Years of Experience</div>
-                </div>
-                <div className="text-center">
-                  <div className="font-display font-extrabold text-[1.8rem] lg:text-[2rem] text-blue leading-none mb-1">30+</div>
-                  <div className="font-mono text-[0.55rem] lg:text-[0.6rem] tracking-[0.14em] uppercase text-muted max-w-[150px] mx-auto">Brands Scaled</div>
-                </div>
-                <div className="col-span-2 sm:col-span-1 text-center">
-                  <div className="font-display font-extrabold text-[1.8rem] lg:text-[2rem] text-blue leading-none mb-1">3</div>
-                  <div className="font-mono text-[0.55rem] lg:text-[0.6rem] tracking-[0.14em] uppercase text-muted max-w-[150px] mx-auto">Products Built</div>
-                </div>
+              <div className="flex flex-wrap gap-6 lg:gap-10 justify-center md:justify-start pt-7 border-t border-[rgba(1,156,255,0.1)]">
+                {(highlightedCards?.cards?.length ? highlightedCards.cards : FALLBACK_STATS).map((card) => (
+                  <div key={card.id} className="text-center">
+                    {card.icon && (
+                      <DynamicIcon name={card.icon} className="text-blue mb-1.5 mx-auto" size={20} strokeWidth={1.75} />
+                    )}
+                    <div className="font-display font-extrabold text-[1.8rem] lg:text-[2rem] text-blue leading-none mb-1">
+                      {card.title}
+                    </div>
+                    <div className="font-mono text-[0.55rem] lg:text-[0.6rem] tracking-[0.14em] uppercase text-muted max-w-[150px] mx-auto">
+                      {card.subtitle}
+                    </div>
+                  </div>
+                ))}
               </div>
             </RevealWrapper>
           </div>

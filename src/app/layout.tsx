@@ -1,8 +1,21 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Outfit, DM_Sans, Space_Mono } from 'next/font/google';
 import './globals.css';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
 import { getPortfolioData } from '@/lib/api';
+import { stripHtml } from '@/lib/text';
+import { JsonLd } from '@/components/seo/JsonLd';
+
+const SITE_URL = 'https://adilashrafi.com';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#050c14' },
+  ],
+};
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -27,24 +40,32 @@ const spaceMono = Space_Mono({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { profile } = await getPortfolioData();
-  const title = `${profile.name || 'Al Adil Ashrafi'} - ${profile.tagline || 'The Marketing Alchemist'}`;
-  const description = profile.bio?.replace(/<[^>]*>/g, '').slice(0, 160) || 'Digital marketing specialist bridging marketing and technology.';
+  const { profile, seo } = await getPortfolioData();
+  const derivedTitle = `${profile.name || 'Al Adil Ashrafi'} - ${profile.tagline || 'The Marketing Alchemist'}`;
+  const derivedDescription = stripHtml(profile.bio || '').slice(0, 160) || 'Digital marketing specialist bridging marketing and technology.';
+
+  const title = seo?.metaTitle || derivedTitle;
+  const description = seo?.metaDescription || derivedDescription;
+  const ogImage = seo?.ogImage || `${SITE_URL}/al-adil-ashrafi-saikat.png`;
 
   return {
+    metadataBase: new URL(SITE_URL),
     title,
     description,
     openGraph: {
       title,
       description,
-      url: 'https://adilashrafi.com',
+      url: SITE_URL,
       siteName: profile.name || 'Al Adil Ashrafi',
       locale: 'en_US',
       type: 'website',
+      images: [{ url: ogImage }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
+      description,
+      images: [ogImage],
     },
     robots: {
       index: true,
@@ -55,7 +76,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { profile, testimonials } = await getPortfolioData();
+
   return (
     <html
       lang="en"
@@ -63,6 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body className="font-body" suppressHydrationWarning>
+        <JsonLd profile={profile} testimonials={testimonials} siteUrl={SITE_URL} />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <ScrollProgress />
           {children}

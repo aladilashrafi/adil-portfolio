@@ -19,6 +19,9 @@ export interface Project {
   tech_tags: string[];
   excerpt?: string;
   image_url: string;
+  image_width?: number;
+  image_height?: number;
+  image_alt?: string;
   order: number;
   role?: string;
   timeline?: string;
@@ -28,6 +31,9 @@ export interface Project {
   technologies?: any[];
   industries?: any[];
   key_results?: string[];
+  seo?: { title?: string; description?: string };
+  date?: string;
+  modified?: string;
 }
 
 export interface Service {
@@ -66,12 +72,59 @@ export interface Testimonial {
   title: string;
   company: string;
   avatar_url: string;
+  rating: number;
 }
 
 export interface Client {
   id: number;
   name: string;
   logo: string;
+}
+
+export interface HighlightedCard {
+  id: string;
+  title: string;
+  subtitle: string;
+  icon: string;
+}
+
+export interface HighlightedCards {
+  title: string;
+  subtitle: string;
+  cards: HighlightedCard[];
+}
+
+export interface SiteSeo {
+  metaTitle: string;
+  metaDescription: string;
+  ogImage: string;
+}
+
+export interface TaxonomyTerm {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface TechStackSection {
+  title: string;
+  subtitle: string;
+  description: string;
+  items: TaxonomyTerm[];
+}
+
+export interface IndustriesSection {
+  title: string;
+  subtitle: string;
+  description: string;
+  items: TaxonomyTerm[];
+}
+
+export interface TestimonialsSectionData {
+  title: string;
+  subtitle: string;
+  description: string;
+  videoUrl: string;
 }
 
 export interface PortfolioData {
@@ -83,6 +136,11 @@ export interface PortfolioData {
   clients: Client[];
   resumeUrl: string | null;
   profile: any;
+  highlightedCards: HighlightedCards;
+  seo: SiteSeo;
+  techStackSection: TechStackSection;
+  industriesSection: IndustriesSection;
+  testimonialsSection: TestimonialsSectionData;
 }
 
 export interface ContactPayload {
@@ -124,6 +182,9 @@ function mapProject(data: any): Project {
     tech_tags: data.techStack || [],
     excerpt: data.excerpt,
     image_url: data.featuredImage?.url || '',
+    image_width: data.featuredImage?.width,
+    image_height: data.featuredImage?.height,
+    image_alt: data.featuredImage?.alt || data.title,
     order: data.order,
     role: data.client, // Using client name as role if applicable, or leaving blank
     timeline: data.completionDate,
@@ -132,6 +193,9 @@ function mapProject(data: any): Project {
     technologies: data.technologies,
     industries: data.industries,
     key_results: data.keyResults || [],
+    seo: data.seo,
+    date: data.date,
+    modified: data.modified,
   };
 }
 
@@ -167,6 +231,7 @@ function mapTestimonial(data: any): Testimonial {
     title: data.clientPosition,
     company: data.company,
     avatar_url: data.clientImage,
+    rating: Number(data.rating) || 5,
   };
 }
 
@@ -239,11 +304,11 @@ export async function getClients(): Promise<Client[]> {
 // Dummy for backwards compatibility
 export async function getSiteSettings(): Promise<any> {
   try {
-     const data = await apiFetch<any>('/profile');
+     const data = await apiFetch<any>('/main');
      return {
-        email: data.email || 'hello@adilashrafi.com',
+        email: data.general?.email || 'hello@adilashrafi.com',
         linkedin: data.social?.linkedin || 'https://www.linkedin.com/in/al-adil-ashrafi/',
-        location: data.location || 'Mohammadpur, Dhaka',
+        location: data.general?.locations?.[0]?.value || 'Mohammadpur, Dhaka',
         availability: 'Available', // Hardcoded for now or add to CMS
      };
   } catch {
@@ -258,9 +323,21 @@ export async function getSiteSettings(): Promise<any> {
 
 // ─── Bulk fetch (single round-trip emulation) ────────────────────────────────
 
+function dedupeTerms(projects: Project[], key: 'technologies' | 'industries'): TaxonomyTerm[] {
+  const seen = new Map<string, TaxonomyTerm>();
+  for (const project of projects) {
+    for (const term of project[key] || []) {
+      if (term?.slug && !seen.has(term.slug)) {
+        seen.set(term.slug, { id: term.id, name: term.name, slug: term.slug });
+      }
+    }
+  }
+  return Array.from(seen.values());
+}
+
 export async function getPortfolioData(): Promise<PortfolioData> {
   try {
-    const [projects, experience, skills, testimonials, resumeUrl, clients, services, profileData] = await Promise.all([
+    const [projects, experience, skills, testimonials, resumeUrl, clients, services, mainData] = await Promise.all([
       getProjects(),
       getExperience(),
       getSkills(),
@@ -268,18 +345,59 @@ export async function getPortfolioData(): Promise<PortfolioData> {
       getResume(),
       getClients(),
       getServices(),
-      apiFetch<any>('/profile'),
+      apiFetch<any>('/main'),
     ]);
 
+    const general = mainData.general || {};
+    const homepage = mainData.homepage || {};
+
     const profile = {
-        name: profileData.name || 'Al Adil Ashrafi',
-        tagline: profileData.tagline || 'The Marketing Alchemist',
-        hero_bio: profileData.hero_bio || '',
-        bio: profileData.bio || '',
-        email: profileData.email || 'hello@adilashrafi.com',
-        phone: profileData.phone || '+880 1853 837221',
-        location: profileData.location || 'Mohammadpur, Dhaka',
-        social: profileData.social || {},
+        name: general.name || 'Al Adil Ashrafi',
+        tagline: general.tagline || 'The Marketing Alchemist',
+        hero_bio: homepage.hero?.description || '',
+        bio: homepage.about?.description || '',
+        email: general.email || 'hello@adilashrafi.com',
+        phone: general.phone || '+880 1853 837221',
+        location: general.locations?.[0]?.value || 'Mohammadpur, Dhaka',
+        social: mainData.social || {},
+    };
+
+    const highlightedCards: HighlightedCards = {
+      title: homepage.highlighted_cards?.title || '',
+      subtitle: homepage.highlighted_cards?.subtitle || '',
+      cards: (homepage.highlighted_cards?.cards || []).map((c: any) => ({
+        id: c.id,
+        title: c.title,
+        subtitle: c.subtitle,
+        icon: c.icon,
+      })),
+    };
+
+    const seo: SiteSeo = {
+      metaTitle: mainData.seo?.meta_title || '',
+      metaDescription: mainData.seo?.meta_description || '',
+      ogImage: mainData.seo?.og_image || '',
+    };
+
+    const techStackSection: TechStackSection = {
+      title: homepage.tech_stack?.title || '',
+      subtitle: homepage.tech_stack?.subtitle || '',
+      description: homepage.tech_stack?.description || '',
+      items: dedupeTerms(projects, 'technologies'),
+    };
+
+    const industriesSection: IndustriesSection = {
+      title: homepage.industries?.title || '',
+      subtitle: homepage.industries?.subtitle || '',
+      description: homepage.industries?.description || '',
+      items: dedupeTerms(projects, 'industries'),
+    };
+
+    const testimonialsSection: TestimonialsSectionData = {
+      title: homepage.testimonials?.title || '',
+      subtitle: homepage.testimonials?.subtitle || '',
+      description: homepage.testimonials?.description || '',
+      videoUrl: homepage.testimonials?.video_url || '',
     };
 
     return {
@@ -291,6 +409,11 @@ export async function getPortfolioData(): Promise<PortfolioData> {
       clients,
       resumeUrl,
       profile,
+      highlightedCards,
+      seo,
+      techStackSection,
+      industriesSection,
+      testimonialsSection,
     };
   } catch (error) {
     console.error('Failed to fetch portfolio data:', error);
@@ -303,6 +426,11 @@ export async function getPortfolioData(): Promise<PortfolioData> {
       clients: [],
       resumeUrl: null,
       profile: {},
+      highlightedCards: { title: '', subtitle: '', cards: [] },
+      seo: { metaTitle: '', metaDescription: '', ogImage: '' },
+      techStackSection: { title: '', subtitle: '', description: '', items: [] },
+      industriesSection: { title: '', subtitle: '', description: '', items: [] },
+      testimonialsSection: { title: '', subtitle: '', description: '', videoUrl: '' },
     };
   }
 }

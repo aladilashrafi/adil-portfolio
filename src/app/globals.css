@@ -5,10 +5,16 @@
 @source "../lib";
 
 @theme {
-  /* Brand Colors */
-  --color-blue: #019cff;
+  /* Brand Colors — used as solid fills (buttons, icons) and, via low-opacity
+     tints, as badge/chip backgrounds and inline text color. Darkened by
+     ~20-25% versus the raw brand hex so text/tint usage clears WCAG AA
+     against light-theme white backgrounds (raw values only cleared it
+     against the dark theme). Dark theme overrides these back closer to
+     the vivid brand hex below, since the darker text-on-black already
+     has ample contrast headroom. */
+  --color-blue: #0175bf;
   --color-blue-dark: #0088e0;
-  --color-orange: #fe5401;
+  --color-orange: #cb4301;
   --color-green: #2dce89;
 
   /* Light Theme Colors (Default) */
@@ -51,6 +57,13 @@
 ══════════════════════════════════════════ */
 @layer base {
   .dark {
+    /* Restore the vivid brand hex in dark mode — the darkened light-mode
+       values above exist only to keep text/tint usage AA-compliant on
+       white; on the near-black dark background the original vivid blue/
+       orange already clears contrast comfortably and looks correct. */
+    --color-blue: #019cff;
+    --color-orange: #fe5401;
+
     /* Dark Theme Colors */
     --color-dark: #050c14;
     --color-dark-2: #0b1622;
@@ -124,6 +137,29 @@
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
   }
 
+  /* Clip Path Button — mirrored corners (for secondary CTAs) */
+  .btn-clip-reverse {
+    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  }
+
+  /* Placeholder gradient for missing featured images. A fixed alpha wash
+     reads as a moody accent on the dark background but nearly disappears
+     on white, so the light-mode tint is boosted to stay visible. */
+  .image-fallback-gradient {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-blue) 22%, transparent),
+      color-mix(in srgb, var(--color-orange) 16%, transparent)
+    );
+  }
+  .dark .image-fallback-gradient {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-blue) 15%, transparent),
+      color-mix(in srgb, var(--color-orange) 10%, transparent)
+    );
+  }
+
   /* Gradient Text */
   .gradient-text {
     background: linear-gradient(90deg, var(--color-blue), var(--color-orange));
@@ -158,31 +194,36 @@
     line-height: 1.8;
   }
   .prose p {
-    margin-bottom: 0.5rem;
+    color: inherit;
+    margin-bottom: 1rem;
   }
   .prose h1, .prose h2, .prose h3, .prose h4 {
     color: var(--color-text);
     font-family: var(--font-display);
     font-weight: bold;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     margin-bottom: 0.75rem;
     line-height: 1.2;
   }
   .prose h2 { font-size: 1.75rem; }
   .prose h3 { font-size: 1.5rem; }
+  .prose h4 { font-size: 1.25rem; }
   .prose ul {
     list-style-type: disc;
     margin-bottom: 1.5rem;
     padding-left: 1.5rem;
+    color: inherit;
   }
   .prose ol {
     list-style-type: decimal;
     margin-bottom: 1.5rem;
     padding-left: 1.5rem;
+    color: inherit;
   }
   .prose li {
     margin-bottom: 0.5rem;
     padding-left: 0.5rem;
+    color: inherit;
   }
   .prose li::marker {
     color: var(--color-blue);
@@ -212,6 +253,37 @@
     color: var(--color-text);
     font-weight: 600;
   }
+  .prose em {
+    color: inherit;
+    font-style: italic;
+  }
+  .prose code {
+    color: var(--color-orange);
+    background: rgba(254, 84, 1, 0.08);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+  }
+  .prose pre {
+    background: var(--color-dark-2);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+  .prose pre code {
+    background: none;
+    padding: 0;
+    color: var(--color-text);
+    font-size: 0.875rem;
+  }
+  .prose hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2rem 0;
+  }
   .prose img {
     max-width: 100%;
     height: auto;
@@ -225,6 +297,19 @@
     font-size: 0.9rem;
     overflow-x: auto;
     display: block;
+  }
+  .prose th {
+    background: var(--color-dark-2);
+    color: var(--color-text);
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--color-border-blue);
+  }
+  .prose td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    color: inherit;
   }
 }
 

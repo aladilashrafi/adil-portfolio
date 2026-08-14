@@ -2,6 +2,7 @@ import type { Project } from '@/lib/api';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { RevealWrapper } from '@/components/ui/RevealWrapper';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function ProjectsSection({ projects }: { projects: Project[] }) {
   return (
@@ -31,18 +32,50 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
 
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <div
-      className="group bg-dark-2 border border-[rgba(1,156,255,0.08)] p-7 relative overflow-hidden transition-all duration-300 hover:border-[rgba(1,156,255,0.25)] hover:-translate-y-1 flex flex-col h-full"
+    <article
+      className="group bg-dark-2 border border-[rgba(1,156,255,0.08)] relative overflow-hidden transition-all duration-300 hover:border-[rgba(1,156,255,0.25)] hover:-translate-y-1 flex flex-col h-full"
       style={{ borderRadius: '3px' }}
     >
       <Link href={`/projects/${project.slug}`} className="absolute inset-0 z-0" />
 
+      {/* Featured Image */}
+      <div className="relative w-full aspect-[16/10] overflow-hidden pointer-events-none">
+        {project.image_url ? (
+          <Image
+            src={project.image_url}
+            alt={project.image_alt || project.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="image-fallback-gradient absolute inset-0" />
+        )}
+
+        {project.tech_tags && project.tech_tags.length > 0 && (
+          <div
+            className="absolute inset-0 flex flex-wrap items-end content-end gap-1.5 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{ background: 'linear-gradient(to top, color-mix(in srgb, var(--color-dark-2) 92%, transparent), color-mix(in srgb, var(--color-dark-2) 10%, transparent) 60%)' }}
+          >
+            {project.tech_tags.map((tag) => (
+              <span
+                key={tag}
+                className="font-mono text-[0.55rem] tracking-[0.08em] uppercase text-blue bg-[rgba(1,156,255,0.1)] border border-[rgba(1,156,255,0.25)] px-2 py-0.5 backdrop-blur-sm"
+                style={{ borderRadius: '2px' }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* Arrow */}
-      <span className="absolute top-4 right-5 text-base text-muted transition-all duration-200 group-hover:text-blue group-hover:translate-x-0.5 group-hover:-translate-y-0.5 pointer-events-none">
+      <span className="absolute top-4 right-5 text-base text-muted transition-all duration-200 group-hover:text-blue group-hover:translate-x-0.5 group-hover:-translate-y-0.5 pointer-events-none z-20">
         ↗
       </span>
 
-      <div className="relative z-10 pointer-events-none">
+      <div className="relative z-10 pointer-events-none p-7 flex-1 flex flex-col">
         <div className="flex items-center gap-3 mb-4">
           <p className="font-mono text-[0.58rem] tracking-[0.16em] uppercase text-orange">
             {project.badge}
@@ -57,27 +90,13 @@ function ProjectCard({ project }: { project: Project }) {
           {project.name}
         </h3>
 
-        <p className="text-[0.84rem] text-muted leading-[1.65] mb-5 line-clamp-3">
+        <p className="text-[0.84rem] text-muted leading-[1.65] line-clamp-3">
           {project.excerpt || project.description}
         </p>
-
-        {project.tech_tags && project.tech_tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-8">
-            {project.tech_tags.map((tag) => (
-              <span
-                key={tag}
-                className="font-mono text-[0.55rem] tracking-[0.08em] uppercase text-blue bg-[rgba(1,156,255,0.08)] border border-[rgba(1,156,255,0.15)] px-2 py-0.5"
-                style={{ borderRadius: '2px' }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
       </div>
 
       {project.url && (
-        <div className="mt-auto relative z-20">
+        <div className="mt-auto relative z-20 px-7 pb-7">
           <a
             href={project.url}
             target="_blank"
@@ -89,6 +108,6 @@ function ProjectCard({ project }: { project: Project }) {
           </a>
         </div>
       )}
-    </div>
+    </article>
   );
 }
