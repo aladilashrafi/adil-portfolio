@@ -16,7 +16,7 @@ const nextConfig = {
   },
   // ISR + SSR hybrid — pages revalidate every 60s
   // Each page controls its own revalidation via generateStaticParams / revalidate export
-  output: 'standalone',
+ // output: 'standalone',
 };
 
 module.exports = nextConfig;
